@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.concurrent.Executors;
 
-public class SunNetHttpServer implements Server {
+public class SunNetHttpServerImpl implements Server {
 
     final int backlog = 64;
     final InetSocketAddress serverPort = new InetSocketAddress(85);

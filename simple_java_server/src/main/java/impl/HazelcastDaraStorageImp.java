@@ -2,21 +2,14 @@ package impl;
 
 import com.hazelcast.client.HazelcastClient;
 import com.hazelcast.client.config.ClientConfig;
-import com.hazelcast.client.config.ClientNetworkConfig;
 import com.hazelcast.config.Config;
-import com.hazelcast.config.NetworkConfig;
-import com.hazelcast.config.XmlConfigBuilder;
 import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
 
 
-import entity.UserEntity;
-import exceptions.XMLFilePropertiesLoadException;
-
-import java.io.FileNotFoundException;
 import java.util.Map;
 
-public class HazelcastDaraStorage {
+public class HazelcastDaraStorageImp {
 
     private Map<Integer, String> hazelcastMap;
     private String storageName;

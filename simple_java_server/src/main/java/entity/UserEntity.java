@@ -1,65 +1,77 @@
 package entity;
 
-import org.json.JSONObject;
+import java.util.*;
 
-public class UserEntity implements Comparable {
+public class UserEntity {
 
-    private String userId;
-    private Integer levelId;
-    private Integer result;
+    private Integer userId;
+    private Integer resultOnLevel;
+    private Map<Integer, Integer> levelsAndResults = new TreeMap<>();
+    private Map<Integer, Integer> sortedResultsOnAllLevels;
+    private List<Integer> sortedResults;
 
-    public String getUserId() {
+
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public UserEntity (Integer userId){
         this.userId = userId;
     }
 
-    public int getLevelId() {
-        return levelId;
+    public void addLevelAndResult(Integer level, Integer result){
+        levelsAndResults.put(level, result);
     }
 
-    public void setLevelId(int levelId) {
-        this.levelId = levelId;
-    }
-
-    public int getResult() {
-        return result;
-    }
-
-    public void setResult(int result) {
-        this.result = result;
+    public void getResultOnLevel(int level){
+        resultOnLevel = levelsAndResults.get(level);
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
-        UserEntity that = (UserEntity) obj;
+        UserEntity that = (UserEntity) o;
 
-        if (levelId != that.levelId) return false;
-        if (result != that.result) return false;
-        return userId.equals(that.userId);
+        if (!getUserId().equals(that.getUserId())) return false;
+        if (!resultOnLevel.equals(that.resultOnLevel)) return false;
+        return levelsAndResults.equals(that.levelsAndResults);
 
-    }
-
-    public int compareTo(Object obj){
-        UserEntity that = (UserEntity) obj;
-        return result.compareTo(that.getResult());
     }
 
     @Override
     public int hashCode() {
-        int result1 = userId.hashCode();
-        result1 = 31 * result1 + levelId;
-        result1 = 31 * result1 + result;
-        return result1;
+        int result = getUserId().hashCode();
+        result = 31 * result + resultOnLevel.hashCode();
+        result = 31 * result + levelsAndResults.hashCode();
+        return result;
     }
 
-    @Override
-    public String toString() {
-        return new JSONObject(this).toString();
+    public void sortResultsOnAllLevels(){
+        sortedResultsOnAllLevels = new TreeMap<Integer, Integer>(new Comparator<Integer>() {
+            @Override
+            public int compare(Integer o1, Integer o2) {
+                return levelsAndResults.get(o1).compareTo(levelsAndResults.get(o2));
+            }
+        });
+        sortedResultsOnAllLevels.putAll(levelsAndResults);
     }
+
+    public void getResultsOnLevels(){
+        for (Map.Entry<Integer, Integer> entry : sortedResultsOnAllLevels.entrySet()){
+            System.err.println("Level '" + entry.getKey() +"'  RESULT '" + entry.getValue() + "'");
+        }
+        System.err.println("");
+        Set<Map.Entry<Integer, Integer>> entrySet = sortedResultsOnAllLevels.entrySet();
+        Iterator<Map.Entry<Integer,Integer>> iterator = entrySet.iterator();
+        for (int i = 0; i < 5; i++){
+            Map.Entry<Integer, Integer> entry = iterator.next();
+            System.err.println(entry.getKey() + " <----> " + entry.getValue());
+        }
+    }
+
+
+
+
 }

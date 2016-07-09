@@ -1,9 +1,7 @@
 package entity;
 
-import com.google.common.collect.ComparisonChain;
-import org.omg.CORBA.Object;
 
-public class LevelAndScore implements Comparable<LevelAndScore> {
+public class LevelAndResultEntity implements Comparable {
 
     private Integer level;
     private Integer score;
@@ -28,7 +26,7 @@ public class LevelAndScore implements Comparable<LevelAndScore> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        LevelAndScore that = (LevelAndScore) o;
+        LevelAndResultEntity that = (LevelAndResultEntity) o;
 
         if (!getLevel().equals(that.getLevel())) return false;
         return getScore().equals(that.getScore());
@@ -41,9 +39,13 @@ public class LevelAndScore implements Comparable<LevelAndScore> {
         return result;
     }
 
-
-    public int compareTo(LevelAndScore that){
-       return ComparisonChain.start().compare(score, that.getScore()).result();
+    @Override
+    public int compareTo(Object obj){
+        LevelAndResultEntity that = (LevelAndResultEntity) obj;
+        return this.getScore().compareTo(that.getScore());
     }
+
+
+
 
 }

@@ -1,22 +1,6 @@
-import com.sun.net.httpserver.HttpContext;
-import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpHandler;
-import com.sun.net.httpserver.HttpServer;
-import com.sun.net.httpserver.spi.HttpServerProvider;
 import entity.UserEntity;
-import impl.HazelcastDaraStorage;
-import impl.SunNetHttpServer;
-import org.json.JSONObject;
+import impl.SunNetHttpServerImpl;
 import service.Server;
-import sun.net.httpserver.DefaultHttpServerProvider;
-
-import java.io.IOException;
-import java.io.OutputStream;
-import java.net.InetSocketAddress;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.Executors;
 
 /**
  * Created by Димон on 04.07.2016.
@@ -75,7 +59,7 @@ public class App {
 //    public static void main(String[] args) {
 //
 //
-//        HazelcastDaraStorage storage = new HazelcastDaraStorage();
+//        HazelcastDaraStorageImp storage = new HazelcastDaraStorageImp();
 //
 //        storage.startMasterStorage(5900, "mp");
 //        storage.connectToMasterStorage("192.168.1.219:5900", "mp");
@@ -83,9 +67,23 @@ public class App {
 //
 //    }
 
+//    public static void main(String[] args) {
+//        Server server = new SunNetHttpServerImpl();
+//        server.start();
+//    }
+
     public static void main(String[] args) {
-        Server server = new SunNetHttpServer();
-        server.start();
+        UserEntity userEntity = new UserEntity(17);
+        userEntity.addLevelAndResult(1, 10);
+        userEntity.addLevelAndResult(2, 7);
+        userEntity.addLevelAndResult(3, 55);
+        userEntity.addLevelAndResult(4, 2);
+        userEntity.addLevelAndResult(5, 2);
+        userEntity.addLevelAndResult(6, 3);
+        userEntity.addLevelAndResult(7, 1);
+
+        userEntity.sortResultsOnAllLevels();
+        userEntity.getResultsOnLevels();
     }
 
 }
