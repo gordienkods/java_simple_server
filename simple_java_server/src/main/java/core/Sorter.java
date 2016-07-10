@@ -24,12 +24,14 @@ public class Sorter {
         return result;
     }
 
-    public static Map<Integer, UserEntity> sortUsersByResultsOnLevel(Map<Integer, UserEntity> unsortedMap){
+    public static Map<Integer, UserEntity> sortUsersByResultsOnLevel(Map<Integer, UserEntity> unsortedMap, Integer level){
         List<Map.Entry<Integer, UserEntity>> list = new LinkedList<>(unsortedMap.entrySet());
 
         Collections.sort(list, new Comparator<Map.Entry<Integer, UserEntity>>() {
             @Override
             public int compare(Map.Entry<Integer, UserEntity> o1, Map.Entry<Integer, UserEntity> o2) {
+                o1.getValue().setLevelResult(level);
+                o2.getValue().setLevelResult(level);
                 return (o2.getValue().getLevelResult()).compareTo(o1.getValue().getLevelResult());
             }
         });

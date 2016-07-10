@@ -53,13 +53,7 @@ public class HazelcastDaraStorageImp implements DataStorage {
     }
 
     public void buildDescTopUsersByLevelResult(int topSize, int level){
-        for (Map.Entry<Integer, UserEntity> entry : users.entrySet()){
-            UserEntity userEntityWithLevel =  entry.getValue();
-            userEntityWithLevel.setLevelResult(level);
-            users.replace(entry.getKey(), userEntityWithLevel);
-        }
-
-        Map<Integer, UserEntity> sortedUsersByLevelResult = Sorter.sortUsersByResultsOnLevel(users);
+        Map<Integer, UserEntity> sortedUsersByLevelResult = Sorter.sortUsersByResultsOnLevel(users, level);
         Set<Map.Entry<Integer, UserEntity>> entrySet = sortedUsersByLevelResult.entrySet();
         Iterator<Map.Entry<Integer,UserEntity>> iterator = entrySet.iterator();
 

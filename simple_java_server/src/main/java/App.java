@@ -1,7 +1,9 @@
 import entity.UserEntity;
 
 import impl.HazelcastDaraStorageImp;
+import impl.SunNetHttpServerImpl;
 import service.DataStorage;
+import service.Server;
 
 import java.util.Map;
 
@@ -92,49 +94,59 @@ public class App {
 //
 //    }
 
-    public static void main(String[] args) {
-        HazelcastDaraStorageImp dataStorage = new HazelcastDaraStorageImp();
-        dataStorage.startMasterStorage(65);
-
-        UserEntity user1 = new UserEntity(1);
-        user1.addLevelAndResult(1,11);
-        user1.addLevelAndResult(2,22);
-        user1.addLevelAndResult(3,33);
-
-
-        UserEntity user2 = new UserEntity(2);
-        user2.addLevelAndResult(1,13);
-        user2.addLevelAndResult(2,13);
-        user2.addLevelAndResult(3,13);
-
-        UserEntity user3 = new UserEntity(3);
-        user3.addLevelAndResult(1,11);
-        user3.addLevelAndResult(2,22);
-        user3.addLevelAndResult(3,55);
-
-        dataStorage.addUser(user1);
-        dataStorage.addUser(user2);
-        dataStorage.addUser(user3);
-
-        System.err.println("-------- main before sort ---------");
-        for (Map.Entry<Integer, UserEntity> entityEntry : dataStorage.getUsers().entrySet()){
-
-            System.err.println(entityEntry.getKey() + "  " + entityEntry.getValue().toJson());
-
-        }
-        System.err.println("-----------------------");
-
-
-        dataStorage.buildDescTopUsersByLevelResult(100, 2);
-
-//        System.err.println("-------- main after sort ---------");
+//    public static void main(String[] args) {
+//        HazelcastDaraStorageImp dataStorage = new HazelcastDaraStorageImp();
+//        dataStorage.startMasterStorage(65);
+//
+//        UserEntity user1 = new UserEntity(1);
+//        user1.addLevelAndResult(1,11);
+//        user1.addLevelAndResult(2,22);
+//        user1.addLevelAndResult(3,33);
+//
+//
+//        UserEntity user2 = new UserEntity(2);
+//        user2.addLevelAndResult(1,13);
+//        user2.addLevelAndResult(2,13);
+//        user2.addLevelAndResult(3,13);
+//
+//        UserEntity user3 = new UserEntity(3);
+//        user3.addLevelAndResult(1,11);
+//        user3.addLevelAndResult(2,22);
+//        user3.addLevelAndResult(3,55);
+//
+//        dataStorage.addUser(user1);
+//        dataStorage.addUser(user2);
+//        dataStorage.addUser(user3);
+//
+//        System.err.println("-------- main before sort ---------");
 //        for (Map.Entry<Integer, UserEntity> entityEntry : dataStorage.getUsers().entrySet()){
-//            System.err.println("-------- main ---------");
-//            System.err.println(entityEntry.getKey() + "  " + entityEntry.getValue().getUserId() + "  " + entityEntry.getValue().getLevelResult());
-//            System.err.println("-----------------------");
+//
+//            System.err.println(entityEntry.getKey() + "  " + entityEntry.getValue().toJson());
+//
 //        }
+//        System.err.println("-----------------------");
+//
+//
+//        dataStorage.buildDescTopUsersByLevelResult(100, 2);
+//
+////        System.err.println("-------- main after sort ---------");
+////        for (Map.Entry<Integer, UserEntity> entityEntry : dataStorage.getUsers().entrySet()){
+////            System.err.println("-------- main ---------");
+////            System.err.println(entityEntry.getKey() + "  " + entityEntry.getValue().getUserId() + "  " + entityEntry.getValue().getLevelResult());
+////            System.err.println("-----------------------");
+////        }
+//
+//        dataStorage.print();
+//
+//
+//    }
 
-        dataStorage.print();
+    public static void main(String[] args) {
+        DataStorage dataStorage = new HazelcastDaraStorageImp();
+        dataStorage.startMasterStorage(89);
+        Server server = new SunNetHttpServerImpl();
+        server.setDataStorage(dataStorage);
+        server.start();
 
 
     }
