@@ -9,4 +9,6 @@ public interface Data {
 
     public String getTop20UsersByDecresingResultsOrderOnLevel(Integer level);
 
+    public String getTop20ResultsDecr(Integer level);
+
 }

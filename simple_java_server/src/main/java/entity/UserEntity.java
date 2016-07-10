@@ -1,5 +1,7 @@
 package entity;
-
+import com.google.gson.internal.LinkedHashTreeMap;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import java.util.*;
 
 public class UserEntity {
@@ -7,8 +9,7 @@ public class UserEntity {
     private Integer userId;
     private Integer resultOnLevel;
     private Map<Integer, Integer> levelsAndResults = new TreeMap<>();
-    private Map<Integer, Integer> sortedResultsOnAllLevels;
-    private List<Integer> sortedResults;
+    private Map<Integer, Integer> sortedTopLevelsAndResults = new LinkedHashTreeMap<>();
 
 
     public Integer getUserId() {
@@ -37,7 +38,6 @@ public class UserEntity {
         if (!getUserId().equals(that.getUserId())) return false;
         if (!resultOnLevel.equals(that.resultOnLevel)) return false;
         return levelsAndResults.equals(that.levelsAndResults);
-
     }
 
     @Override
@@ -48,30 +48,57 @@ public class UserEntity {
         return result;
     }
 
-    public void sortResultsOnAllLevels(){
-        sortedResultsOnAllLevels = new TreeMap<Integer, Integer>(new Comparator<Integer>() {
-            @Override
-            public int compare(Integer o1, Integer o2) {
-                return levelsAndResults.get(o1).compareTo(levelsAndResults.get(o2));
-            }
-        });
-        sortedResultsOnAllLevels.putAll(levelsAndResults);
-    }
-
-    public void getResultsOnLevels(){
-        for (Map.Entry<Integer, Integer> entry : sortedResultsOnAllLevels.entrySet()){
-            System.err.println("Level '" + entry.getKey() +"'  RESULT '" + entry.getValue() + "'");
-        }
-        System.err.println("");
+    public void buildDescTop(int levelDeep){
+        Map<Integer, Integer> sortedResultsOnAllLevels = sortResultsOnAllLevelsByDescOrder(levelsAndResults);
         Set<Map.Entry<Integer, Integer>> entrySet = sortedResultsOnAllLevels.entrySet();
         Iterator<Map.Entry<Integer,Integer>> iterator = entrySet.iterator();
-        for (int i = 0; i < 5; i++){
-            Map.Entry<Integer, Integer> entry = iterator.next();
-            System.err.println(entry.getKey() + " <----> " + entry.getValue());
+
+        if (levelDeep < sortedResultsOnAllLevels.size()){
+            for (int i = 0; i < levelDeep; i++){
+                Map.Entry<Integer, Integer> entry = iterator.next();
+                sortedTopLevelsAndResults.put(entry.getKey(), entry.getValue());
+                System.err.println(entry.getKey() + "  " + entry.getValue());
+            }
+        } else {
+            while (iterator.hasNext()){
+                Map.Entry<Integer, Integer> entry = iterator.next();
+                sortedTopLevelsAndResults.put(entry.getKey(), entry.getValue());
+                System.err.println(entry.getKey() + "  " + entry.getValue());
+            }
         }
     }
 
+    public String toJson(){
+        JSONObject json = new JSONObject();
+        JSONArray jsonArray = new JSONArray();
+        json.put("userId", userId);
 
+        Set<Map.Entry<Integer,Integer>> entrySet = sortedTopLevelsAndResults.entrySet();
+        Iterator<Map.Entry<Integer,Integer>> iterator = entrySet.iterator();
+        for (int i = 0; i < sortedTopLevelsAndResults.size(); i++){
+            Map.Entry<Integer,Integer> entry = iterator.next();
+            jsonArray.put(i, new JSONObject().put(entry.getKey().toString(), entry.getValue()));
+        }
+        json.put("top", jsonArray);
+        return json.toString();
+    }
 
+    private Map<Integer, Integer> sortResultsOnAllLevelsByDescOrder(Map<Integer, Integer> unsortedMap){
+        List<Map.Entry<Integer,Integer>> list = new LinkedList<>(unsortedMap.entrySet());
+
+        Collections.sort(list, new Comparator<Map.Entry<Integer, Integer>>() {
+            @Override
+            public int compare(Map.Entry<Integer, Integer> o1, Map.Entry<Integer, Integer> o2) {
+                return (o2.getValue()).compareTo(o1.getValue());
+            }
+        });
+
+        LinkedHashMap<Integer,Integer> result = new LinkedHashMap<>();
+        for (Map.Entry<Integer, Integer> entry : list){
+            result.put(entry.getKey(), entry.getValue());
+            System.err.println( " " + entry.getKey().toString() + "  " +  entry.getValue());
+        }
+        return result;
+    }
 
 }

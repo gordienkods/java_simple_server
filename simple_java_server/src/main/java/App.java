@@ -1,6 +1,4 @@
 import entity.UserEntity;
-import impl.SunNetHttpServerImpl;
-import service.Server;
 
 /**
  * Created by Димон on 04.07.2016.
@@ -78,12 +76,15 @@ public class App {
         userEntity.addLevelAndResult(2, 7);
         userEntity.addLevelAndResult(3, 55);
         userEntity.addLevelAndResult(4, 2);
-        userEntity.addLevelAndResult(5, 2);
+        userEntity.addLevelAndResult(5, 55);
         userEntity.addLevelAndResult(6, 3);
         userEntity.addLevelAndResult(7, 1);
 
-        userEntity.sortResultsOnAllLevels();
-        userEntity.getResultsOnLevels();
+        userEntity.buildDescTop(5);
+
+        System.err.println(userEntity.toJson());
+
+
     }
 
 }
