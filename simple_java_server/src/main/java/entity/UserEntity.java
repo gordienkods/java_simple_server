@@ -2,12 +2,14 @@ package entity;
 import core.Sorter;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.io.Serializable;
 import java.util.*;
 
-public class UserEntity {
+public class UserEntity implements Serializable {
 
-    private Integer userId;
-    private Integer levelResult;
+    private Integer userId = 0;
+    private Integer levelResult = 0;
     private Map<Integer, Integer> levelsAndResults = new HashMap<>();
     private Map<Integer, Integer> sortedTopLevelsAndResults = new LinkedHashMap<>();
 
@@ -25,6 +27,7 @@ public class UserEntity {
 
     public void setLevelResult(int level){
         levelResult = levelsAndResults.get(level);
+        System.err.println("USER ID: " + userId + "  RESULT FOR LEVEL [" + level + "]: " + levelResult);
     }
 
     public void buildDescTop(int levelDeep){
@@ -48,6 +51,23 @@ public class UserEntity {
     public Integer getLevelResult() {
         return levelResult;
     }
+
+//    public static UserEntity fromJson(String json){
+//        JSONObject jsonObject = new JSONObject();
+//        JSONArray jsonArray = jsonObject.getJSONArray("top");
+//        sortedTopLevelsAndResults = new LinkedHashMap<>();
+//
+//        for (int i = 0; i < jsonArray.length(); i++){
+//            Iterator iterator = jsonArray.getJSONObject(i).keys();
+//            Integer key = (Integer) iterator.next();
+//            Integer value = (Integer) jsonArray.getJSONObject(i).get(key.toString());
+//            sortedTopLevelsAndResults.put(key, value);
+//        }
+//
+//        UserEntity userEntity = new UserEntity(jsonObject.getInt("userId"));
+//        userEntity.
+//
+//    }
 
     public String toJson(){
         JSONObject json = new JSONObject();
@@ -96,7 +116,7 @@ public class UserEntity {
 
     @Override
     public int hashCode() {
-        int result = getUserId().hashCode();
+        int result = 15;
         result = 31 * result + levelResult.hashCode();
         result = 31 * result + levelsAndResults.hashCode();
         return result;

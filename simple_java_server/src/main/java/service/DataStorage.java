@@ -2,8 +2,8 @@ package service;
 
 public interface DataStorage {
 
-    public void startClient();
+    public void  connectToMasterStorage (String ip);
 
-    public void startMaster();
+    public void startMasterStorage(int port);
 
 }

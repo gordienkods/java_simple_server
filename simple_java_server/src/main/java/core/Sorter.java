@@ -37,7 +37,7 @@ public class Sorter {
         LinkedHashMap<Integer, UserEntity> result = new LinkedHashMap<>();
         for (Map.Entry<Integer, UserEntity> entry : list){
             result.put(entry.getKey(), entry.getValue());
-            System.err.println( " " + entry.getKey().toString() + "  " +  entry.getValue());
+            System.err.println( " " + entry.getKey().toString() + "  " +  entry.getValue().getLevelResult());
         }
         return result;
     }

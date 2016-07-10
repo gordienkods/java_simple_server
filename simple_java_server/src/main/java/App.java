@@ -1,5 +1,10 @@
 import entity.UserEntity;
 
+import impl.HazelcastDaraStorageImp;
+import service.DataStorage;
+
+import java.util.Map;
+
 /**
  * Created by Димон on 04.07.2016.
  */
@@ -70,21 +75,69 @@ public class App {
 //        server.start();
 //    }
 
+//    public static void main(String[] args) {
+//        UserEntity userEntity = new UserEntity(17);
+//        userEntity.addLevelAndResult(1, 10);
+//        userEntity.addLevelAndResult(2, 7);
+//        userEntity.addLevelAndResult(3, 55);
+//        userEntity.addLevelAndResult(4, 2);
+//        userEntity.addLevelAndResult(5, 55);
+//        userEntity.addLevelAndResult(6, 3);
+//        userEntity.addLevelAndResult(7, 1);
+//
+//        userEntity.buildDescTop(5);
+//
+//        System.err.println(userEntity.toJson());
+//
+//
+//    }
+
     public static void main(String[] args) {
-        UserEntity userEntity = new UserEntity(17);
-        userEntity.addLevelAndResult(1, 10);
-        userEntity.addLevelAndResult(2, 7);
-        userEntity.addLevelAndResult(3, 55);
-        userEntity.addLevelAndResult(4, 2);
-        userEntity.addLevelAndResult(5, 55);
-        userEntity.addLevelAndResult(6, 3);
-        userEntity.addLevelAndResult(7, 1);
+        HazelcastDaraStorageImp dataStorage = new HazelcastDaraStorageImp();
+        dataStorage.startMasterStorage(65);
 
-        userEntity.buildDescTop(5);
+        UserEntity user1 = new UserEntity(1);
+        user1.addLevelAndResult(1,11);
+        user1.addLevelAndResult(2,22);
+        user1.addLevelAndResult(3,33);
 
-        System.err.println(userEntity.toJson());
+
+        UserEntity user2 = new UserEntity(2);
+        user2.addLevelAndResult(1,13);
+        user2.addLevelAndResult(2,13);
+        user2.addLevelAndResult(3,13);
+
+        UserEntity user3 = new UserEntity(3);
+        user3.addLevelAndResult(1,11);
+        user3.addLevelAndResult(2,22);
+        user3.addLevelAndResult(3,55);
+
+        dataStorage.addUser(user1);
+        dataStorage.addUser(user2);
+        dataStorage.addUser(user3);
+
+        System.err.println("-------- main before sort ---------");
+        for (Map.Entry<Integer, UserEntity> entityEntry : dataStorage.getUsers().entrySet()){
+
+            System.err.println(entityEntry.getKey() + "  " + entityEntry.getValue().toJson());
+
+        }
+        System.err.println("-----------------------");
+
+
+        dataStorage.buildDescTopUsersByLevelResult(100, 2);
+
+//        System.err.println("-------- main after sort ---------");
+//        for (Map.Entry<Integer, UserEntity> entityEntry : dataStorage.getUsers().entrySet()){
+//            System.err.println("-------- main ---------");
+//            System.err.println(entityEntry.getKey() + "  " + entityEntry.getValue().getUserId() + "  " + entityEntry.getValue().getLevelResult());
+//            System.err.println("-----------------------");
+//        }
+
+        dataStorage.print();
 
 
     }
+
 
 }
