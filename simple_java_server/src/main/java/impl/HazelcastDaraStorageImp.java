@@ -45,11 +45,16 @@ public class HazelcastDaraStorageImp implements DataStorage {
     }
 
     public void addUser(UserEntity userEntity){
-        users.put(userEntity.getUserId(), userEntity);
+        users.set(userEntity.getUserId(), userEntity);
     }
 
     public UserEntity getUser (int userId){
         return users.get(userId);
+    }
+
+    public void updateUserEntity(Integer key, UserEntity userEntity){
+        users.set(key, userEntity);
+        System.err.println("USERS SIZE: "  + users.size());
     }
 
     public void buildDescTopUsersByLevelResult(int topSize, int level){

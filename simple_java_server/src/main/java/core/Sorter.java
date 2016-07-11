@@ -30,8 +30,8 @@ public class Sorter {
         Collections.sort(list, new Comparator<Map.Entry<Integer, UserEntity>>() {
             @Override
             public int compare(Map.Entry<Integer, UserEntity> o1, Map.Entry<Integer, UserEntity> o2) {
-                o1.getValue().setLevelResult(level);
-                o2.getValue().setLevelResult(level);
+                o1.getValue().setSpecificLevelResult(level);
+                o2.getValue().setSpecificLevelResult(level);
                 return (o2.getValue().getLevelResult()).compareTo(o1.getValue().getLevelResult());
             }
         });

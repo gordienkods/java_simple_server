@@ -10,4 +10,6 @@ public interface DataStorage {
 
     public UserEntity getUser (int userId);
 
+    public void updateUserEntity(Integer key, UserEntity userEntity);
+
 }
