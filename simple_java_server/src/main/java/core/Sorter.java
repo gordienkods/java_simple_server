@@ -1,7 +1,6 @@
 package core;
 
 import entity.UserEntity;
-
 import java.util.*;
 
 public class Sorter {
@@ -19,7 +18,6 @@ public class Sorter {
         LinkedHashMap<Integer,Integer> result = new LinkedHashMap<>();
         for (Map.Entry<Integer, Integer> entry : list){
             result.put(entry.getKey(), entry.getValue());
-            System.err.println( " " + entry.getKey().toString() + "  " +  entry.getValue());
         }
         return result;
     }
@@ -32,14 +30,13 @@ public class Sorter {
             public int compare(Map.Entry<Integer, UserEntity> o1, Map.Entry<Integer, UserEntity> o2) {
                 o1.getValue().setSpecificLevelResult(level);
                 o2.getValue().setSpecificLevelResult(level);
-                return (o2.getValue().getLevelResult()).compareTo(o1.getValue().getLevelResult());
+                return (o2.getValue().getSpecificLevelResult()).compareTo(o1.getValue().getSpecificLevelResult());
             }
         });
 
         LinkedHashMap<Integer, UserEntity> result = new LinkedHashMap<>();
         for (Map.Entry<Integer, UserEntity> entry : list){
             result.put(entry.getKey(), entry.getValue());
-            System.err.println( " " + entry.getKey().toString() + "  " +  entry.getValue().getLevelResult());
         }
         return result;
     }

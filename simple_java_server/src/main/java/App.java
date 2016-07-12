@@ -77,25 +77,25 @@ public class App {
 //        server.start();
 //    }
 
-    public static void main(String[] args) {
-        UserEntity userEntity = new UserEntity(17);
-        userEntity.addLevelAndResult(1, 10);
-        userEntity.addLevelAndResult(2, 7);
-        userEntity.addLevelAndResult(3, 55);
-        userEntity.addLevelAndResult(4, 2);
-        userEntity.addLevelAndResult(5, 55);
-        userEntity.addLevelAndResult(6, 3);
-        userEntity.addLevelAndResult(7, 1);
-
-        userEntity.buildDescTop(5);
-
-        String toJson = userEntity.toJson();
-        System.err.println("TO JSON: " + toJson);
-        UserEntity fromJSon = new UserEntity(toJson);
-        System.err.println("FROM JSON: " + fromJSon.toJson());
-
-
-    }
+//    public static void main(String[] args) {
+//        UserEntity userEntity = new UserEntity(17);
+//        userEntity.addLevelAndResult(1, 10);
+//        userEntity.addLevelAndResult(2, 7);
+//        userEntity.addLevelAndResult(3, 55);
+//        userEntity.addLevelAndResult(4, 2);
+//        userEntity.addLevelAndResult(5, 55);
+//        userEntity.addLevelAndResult(6, 3);
+//        userEntity.addLevelAndResult(7, 1);
+//
+//        userEntity.buildDescTop(5);
+//
+//        String toJson = userEntity.toJson();
+//        System.err.println("TO JSON: " + toJson);
+//        UserEntity fromJSon = new UserEntity(toJson);
+//        System.err.println("FROM JSON: " + fromJSon.toJson());
+//
+//
+//    }
 
 //    public static void main(String[] args) {
 //        HazelcastDaraStorageImp dataStorage = new HazelcastDaraStorageImp();
@@ -135,7 +135,7 @@ public class App {
 ////        System.err.println("-------- main after sort ---------");
 ////        for (Map.Entry<Integer, UserEntity> entityEntry : dataStorage.getUsers().entrySet()){
 ////            System.err.println("-------- main ---------");
-////            System.err.println(entityEntry.getKey() + "  " + entityEntry.getValue().getUserId() + "  " + entityEntry.getValue().getLevelResult());
+////            System.err.println(entityEntry.getKey() + "  " + entityEntry.getValue().getUserId() + "  " + entityEntry.getValue().getSpecificLevelResult());
 ////            System.err.println("-----------------------");
 ////        }
 //
@@ -144,13 +144,13 @@ public class App {
 //
 //    }
 
-//    public static void main(String[] args) {
-//        DataStorage dataStorage = new HazelcastDaraStorageImp();
-//        dataStorage.startMasterStorage(89);
-//        Server server = new SunNetHttpServerImpl();
-//        server.setDataStorage(dataStorage);
-//        server.start();
-//    }
+    public static void main(String[] args) {
+        DataStorage dataStorage = new HazelcastDaraStorageImp();
+        dataStorage.startMasterStorage(89);
+        Server server = new SunNetHttpServerImpl();
+        server.setDataStorage(dataStorage);
+        server.start();
+    }
 
 
 }

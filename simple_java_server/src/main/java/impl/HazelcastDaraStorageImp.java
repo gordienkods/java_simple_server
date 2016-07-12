@@ -73,12 +73,16 @@ public class HazelcastDaraStorageImp implements DataStorage {
         }
     }
 
+    public Map<Integer, UserEntity> getSortedTopUsersByLevelResult() {
+        return sortedTopUsersByLevelResult;
+    }
+
     public void print(){
         for(Map.Entry<Integer, UserEntity> entry : sortedTopUsersByLevelResult.entrySet()){
             System.err.println("");
             System.err.println("KEY: " + entry.getKey() + "\n" +
                     "USER ID: " + entry.getValue().getUserId() + "\n" +
-            "VALUE ON LEVEL 2: " +  entry.getValue().getLevelResult());
+            "VALUE ON LEVEL 2: " +  entry.getValue().getSpecificLevelResult());
             System.err.println("");
         }
     }
