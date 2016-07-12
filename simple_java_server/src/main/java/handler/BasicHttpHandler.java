@@ -3,11 +3,10 @@ package handler;
 import com.sun.net.httpserver.HttpExchange;
 import core.Messages;
 import service.DataStorage;
-
 import java.io.IOException;
 import java.io.OutputStream;
 
-public class BasicHttpHandler {
+public abstract class BasicHttpHandler {
 
     protected DataStorage dataStorage = null;
     protected HttpExchange httpExchange = null;
@@ -20,8 +19,8 @@ public class BasicHttpHandler {
         String actualRequestMethod = httpExchange.getRequestMethod();
         if ( !expectedRequestMethod.equalsIgnoreCase(actualRequestMethod)) {
             try (OutputStream os = httpExchange.getResponseBody() ) {
-                httpExchange.sendResponseHeaders(200, Messages._400().getBytes().length);
-                os.write(Messages._400().getBytes());
+                httpExchange.sendResponseHeaders(200, Messages._405().getBytes().length);
+                os.write(Messages._405().getBytes());
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -38,5 +37,7 @@ public class BasicHttpHandler {
             e.printStackTrace();
         }
     }
+
+    abstract protected void requestHandler();
 
 }

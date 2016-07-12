@@ -33,7 +33,7 @@ public class SunNetHttpServerImpl implements Server {
         setHandler(new GetUserInGo(dataStorage));
 
         createContext("/levelinfo");
-        setHandler(new GetLevelInfo());
+        setHandler(new GetLevelInfo(dataStorage));
 
         createContext("/setinfo");
         setHandler(new PutSetInfo(dataStorage));

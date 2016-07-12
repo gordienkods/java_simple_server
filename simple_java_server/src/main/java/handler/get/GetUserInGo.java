@@ -16,14 +16,14 @@ public class GetUserInGo extends BasicHttpHandler implements HttpHandler {
     public void handle(HttpExchange httpExchange){
         super.httpExchange = httpExchange;
         try {
-            requestExecutor();
+            requestHandler();
         } catch (Throwable t) {
-            sendResponse("Something go wrong during request processing :)");
+            sendResponse(Messages._500());
             t.printStackTrace();
         }
     }
-    
-    private void requestExecutor(){
+
+    protected void requestHandler(){
         if(!isRequestMethod("GET")) { return; }
         Integer userId = Integer.parseInt(httpExchange.getRequestURI().toString().replace("/useringo/", ""));
         UserEntity userEntity = dataStorage.getUser(userId);
@@ -32,7 +32,7 @@ public class GetUserInGo extends BasicHttpHandler implements HttpHandler {
             String response = dataStorage.getUser(userId).toJson();
             sendResponse(response);
         } else {
-            sendResponse(Messages._408());
+            sendResponse(Messages._404());
         }
     }
 
