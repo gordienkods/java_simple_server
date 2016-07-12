@@ -6,6 +6,7 @@ import com.sun.xml.internal.stream.Entity;
 import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import core.Messages;
 import entity.UserEntity;
+import handler.BasicHttpHandler;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import service.DataStorage;
@@ -14,12 +15,10 @@ import java.io.*;
 import java.util.Iterator;
 import java.util.Scanner;
 
-public class PutSetInfo implements HttpHandler {
+public class PutSetInfo extends BasicHttpHandler implements HttpHandler   {
 
-    DataStorage dataStorage;
-
-    public PutSetInfo(DataStorage dataStorage){
-        this.dataStorage = dataStorage;
+     public PutSetInfo(DataStorage dataStorage, HttpExchange httpExchange){
+        super(dataStorage, httpExchange);
     }
 
     public void handle (HttpExchange httpExchange){
@@ -54,26 +53,7 @@ public class PutSetInfo implements HttpHandler {
         }
     }
 
-    private Boolean isRequestMethodPUT(HttpExchange httpExchange){
-        if ( !"PUT".equalsIgnoreCase(httpExchange.getRequestMethod())) {
-            try (OutputStream os = httpExchange.getResponseBody() ) {
-                httpExchange.sendResponseHeaders(200, Messages._400().getBytes().length);
-                os.write(Messages._400().getBytes());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return false;
-        }
-        return true;
-    }
 
-    private void sendResponse(String response, HttpExchange httpExchange) {
-        try (OutputStream os = httpExchange.getResponseBody() ) {
-            httpExchange.sendResponseHeaders(200, response.getBytes().length);
-            os.write(response.getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+
 
 }

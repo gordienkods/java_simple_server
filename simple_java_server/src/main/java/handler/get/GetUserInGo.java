@@ -4,18 +4,13 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import core.Messages;
 import entity.UserEntity;
-import org.omg.PortableServer.ServantRetentionPolicy;
+import handler.BasicHttpHandler;
 import service.DataStorage;
 
-import java.io.IOException;
-import java.io.OutputStream;
+public class GetUserInGo extends BasicHttpHandler implements HttpHandler {
 
-public class GetUserInGo implements HttpHandler {
-
-    DataStorage dataStorage;
-
-    public GetUserInGo (DataStorage dataStorage){
-        this.dataStorage = dataStorage;
+    public GetUserInGo (DataStorage dataStorage, HttpExchange httpExchange){
+        super(dataStorage, httpExchange);
     }
 
     public void handle(HttpExchange httpExchange){
@@ -33,26 +28,6 @@ public class GetUserInGo implements HttpHandler {
 
     }
 
-    private Boolean isRequestMethodGET(HttpExchange httpExchange){
-        if ( !"GET".equals(httpExchange.getRequestMethod())) {
-            try (OutputStream os = httpExchange.getResponseBody() ) {
-                httpExchange.sendResponseHeaders(200, Messages._400().getBytes().length);
-                os.write(Messages._400().getBytes());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return false;
-        }
-        return true;
-    }
 
-    private void sendResponse(String response, HttpExchange httpExchange) {
-        try (OutputStream os = httpExchange.getResponseBody() ) {
-            httpExchange.sendResponseHeaders(200, response.getBytes().length);
-            os.write(response.getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
 }
