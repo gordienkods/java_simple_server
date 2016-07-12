@@ -4,7 +4,6 @@ import com.hazelcast.nio.ObjectDataInput;
 import com.hazelcast.nio.ObjectDataOutput;
 import com.hazelcast.nio.serialization.StreamSerializer;
 import entity.UserEntity;
-
 import java.io.IOException;
 
 public class UserEntityStreamSerializer implements StreamSerializer<UserEntity> {
@@ -23,10 +22,8 @@ public class UserEntityStreamSerializer implements StreamSerializer<UserEntity> 
     @Override
     public UserEntity read( ObjectDataInput in )
             throws IOException {
-//        String surname = in.readUTF();
-//        return new Employee(surname);
-        System.err.println("Unrealized method");
-        return null;
+        String json = in.readUTF();
+        return new UserEntity(json);
     }
 
     @Override
