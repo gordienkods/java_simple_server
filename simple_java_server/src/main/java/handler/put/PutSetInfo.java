@@ -17,14 +17,15 @@ import java.util.Scanner;
 
 public class PutSetInfo extends BasicHttpHandler implements HttpHandler   {
 
-     public PutSetInfo(DataStorage dataStorage, HttpExchange httpExchange){
-        super(dataStorage, httpExchange);
+     public PutSetInfo(DataStorage dataStorage){
+        super(dataStorage);
     }
 
     public void handle (HttpExchange httpExchange){
+        super.httpExchange = httpExchange;
         String jsonString = "undefined";
 
-        if(isRequestMethodPUT(httpExchange)) {
+        if(isRequestMethod("PUT")) {
             try (InputStream is = httpExchange.getRequestBody()){
                 Scanner scanner = new Scanner(is);
                 jsonString = scanner.next();
@@ -45,9 +46,9 @@ public class PutSetInfo extends BasicHttpHandler implements HttpHandler   {
                     userEntity.addLevelAndResult(Integer.parseInt(key), Integer.parseInt(value));
                 }
                 dataStorage.updateUserEntity(userId, userEntity);
-                sendResponse("ales gut", httpExchange);
+                sendResponse("ales gut");
             } catch (Throwable t) {
-                sendResponse(Messages._408(), httpExchange);
+                sendResponse(Messages._408());
                 t.printStackTrace();
             }
         }

@@ -9,8 +9,6 @@ import com.hazelcast.core.IMap;
 import core.Sorter;
 import entity.UserEntity;
 import service.DataStorage;
-
-
 import java.util.*;
 
 public class HazelcastDaraStorageImp implements DataStorage {

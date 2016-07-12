@@ -9,25 +9,31 @@ import service.DataStorage;
 
 public class GetUserInGo extends BasicHttpHandler implements HttpHandler {
 
-    public GetUserInGo (DataStorage dataStorage, HttpExchange httpExchange){
-        super(dataStorage, httpExchange);
+    public GetUserInGo (DataStorage dataStorage){
+        super(dataStorage);
     }
 
     public void handle(HttpExchange httpExchange){
-        if(isRequestMethodGET(httpExchange)) {
-            Integer userId = Integer.parseInt(httpExchange.getRequestURI().toString().replace("/useringo/", ""));
-            UserEntity userEntity = dataStorage.getUser(userId);
-            if (userEntity != null){
-                userEntity.buildDescTop(20);
-                String response = dataStorage.getUser(userId).toJson();
-                sendResponse(response, httpExchange);
-            } else {
-                sendResponse(Messages._408(), httpExchange);
-            }
+        super.httpExchange = httpExchange;
+        try {
+            requestExecutor();
+        } catch (Throwable t) {
+            sendResponse("Something go wrong during request processing :)");
+            t.printStackTrace();
         }
-
     }
-
-
+    
+    private void requestExecutor(){
+        if(!isRequestMethod("GET")) { return; }
+        Integer userId = Integer.parseInt(httpExchange.getRequestURI().toString().replace("/useringo/", ""));
+        UserEntity userEntity = dataStorage.getUser(userId);
+        if (userEntity != null){
+            userEntity.buildDescTop(20);
+            String response = dataStorage.getUser(userId).toJson();
+            sendResponse(response);
+        } else {
+            sendResponse(Messages._408());
+        }
+    }
 
 }
