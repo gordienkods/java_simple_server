@@ -1,8 +1,11 @@
 package core;
 
+import org.apache.log4j.Logger;
 import org.json.JSONObject;
 
 public class  Messages {
+
+    private final Logger LOG = Logger.getLogger(Messages.class);
 
     public static String _405(){
         return msgAsJson("error", "405", "Method Not Allowed");

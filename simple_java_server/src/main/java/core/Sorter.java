@@ -1,9 +1,13 @@
 package core;
 
 import entity.UserEntity;
+import org.apache.log4j.Logger;
+
 import java.util.*;
 
 public class Sorter {
+
+    private final Logger LOG = Logger.getLogger(Messages.class);
 
     public static Map<Integer, Integer> sortResultsOnAllLevelsByDescOrder(Map<Integer, Integer> unsortedMap){
         List<Map.Entry<Integer,Integer>> list = new LinkedList<>(unsortedMap.entrySet());

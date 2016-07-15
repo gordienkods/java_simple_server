@@ -2,6 +2,7 @@ package core;
 
 import com.sun.net.httpserver.HttpExchange;
 import entity.UserEntity;
+import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -14,6 +15,9 @@ import static core.Responser.sendResponse;
 
 
 public class Parser {
+
+    private final Logger LOG = Logger.getLogger(Messages.class);
+
 
     public static JSONArray mapToJsonArray (Map<Integer, Integer> map){
         Set<Map.Entry<Integer,Integer>> entrySet = map.entrySet();

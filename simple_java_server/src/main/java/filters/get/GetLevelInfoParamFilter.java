@@ -2,10 +2,14 @@ package filters.get;
 
 import com.sun.net.httpserver.Filter;
 import com.sun.net.httpserver.HttpExchange;
+import org.apache.log4j.Logger;
+
 import static core.Parser.parseIntParamFromUriPath;
 import java.io.IOException;
 
 public class GetLevelInfoParamFilter extends Filter {
+
+    private final Logger LOG = Logger.getLogger(GetLevelInfoParamFilter.class);
 
     private static final String FILTER_DESC = "'/levelinfo' PARAM PARSER";
 

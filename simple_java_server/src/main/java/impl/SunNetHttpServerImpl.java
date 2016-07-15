@@ -11,6 +11,7 @@ import filters.put.PutSetInfoFilter;
 import handlers.get.GetLevelInfo;
 import handlers.get.GetUserInGo;
 import handlers.put.PutSetInfo;
+import org.apache.log4j.Logger;
 import service.DataStorage;
 import sun.net.httpserver.DefaultHttpServerProvider;
 import java.io.IOException;
@@ -19,6 +20,7 @@ import java.util.concurrent.Executors;
 
 public class SunNetHttpServerImpl {
 
+    private final Logger LOG = Logger.getLogger(SunNetHttpServerImpl.class);
     final int backlog = 64;
     final InetSocketAddress serverPort = new InetSocketAddress(85);
     private HttpServer server = null;
@@ -51,6 +53,8 @@ public class SunNetHttpServerImpl {
             e.printStackTrace();
         }
         server.start();
+        LOG.info("Server has been started.");
+
     }
 
 }
