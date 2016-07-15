@@ -10,7 +10,7 @@ import java.io.InputStream;
 import java.net.URI;
 import java.util.*;
 
-import static core.Responser.sendRequest;
+import static core.Responser.sendResponse;
 
 
 public class Parser {
@@ -45,33 +45,36 @@ public class Parser {
         try {
             parsedParam = fullPath.replace(constExpression, "");
         } catch (Exception e1) {
-            sendRequest(Messages._405(), exchange);
+            sendResponse(Messages._405(), exchange);
         }
         try {
             Integer intParam = Integer.parseInt(parsedParam);
         } catch (NumberFormatException e) {
-            sendRequest(Messages._404("param '" + parsedParam + "' value '" + parsedParam), exchange);
+            sendResponse(Messages._404("param '" + parsedParam + "' value '" + parsedParam), exchange);
         }
         exchange.setAttribute(attributeName, parsedParam);
         System.err.println("GET LEVEL INFO: " + exchange.getAttribute(constExpression).toString());
     }
 
-    public static UserEntity parseJsonFromPutBodyToUserEntity(HttpExchange exchange){
+    public static Boolean parseJsonFromPutBodyToUserEntity(HttpExchange exchange){
         String jsonString = "undefined";
+        try {
+            new UserEntity(jsonString);
+            return true;
+        }catch (Throwable t){
+            sendResponse(Messages._500(), exchange);
+            t.printStackTrace();
+        }
+
         try (InputStream is = exchange.getRequestBody()){
             Scanner scanner = new Scanner(is);
             jsonString = scanner.next();
-            try {
-                return new UserEntity(jsonString);
-            }catch (Throwable t){
-                sendRequest(Messages._500(), exchange);
-                t.printStackTrace();
-            }
+
         } catch (IOException e) {
-            sendRequest(Messages._500(), exchange);
+            sendResponse(Messages._500(), exchange);
             e.printStackTrace();
         }
-        return null;
+        return false;
     }
 
 }

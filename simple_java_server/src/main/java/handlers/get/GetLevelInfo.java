@@ -7,7 +7,7 @@ import entity.UserEntity;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import service.DataStorage;
-import static core.Responser.sendRequest;
+import static core.Responser.sendResponse;
 import java.util.Map;
 
 public class GetLevelInfo implements HttpHandler {
@@ -22,7 +22,7 @@ public class GetLevelInfo implements HttpHandler {
         try {
             requestHandler(exchange);
         }catch (Throwable t) {
-            sendRequest(Messages._500(), exchange);
+            sendResponse(Messages._500(), exchange);
             t.printStackTrace();
         }
     }
@@ -42,6 +42,6 @@ public class GetLevelInfo implements HttpHandler {
         jsonObject.put("sorted_level", levelId);
         jsonObject.put("top", jsonArray);
         System.err.println(jsonObject.toString());
-        sendRequest(jsonObject.toString(), exchange);
+        sendResponse(jsonObject.toString(), exchange);
     }
 }

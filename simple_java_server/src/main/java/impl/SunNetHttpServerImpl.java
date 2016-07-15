@@ -7,6 +7,7 @@ import filters.get.GetLevelInfoParamFilter;
 import filters.get.GetRequestBasicFilter;
 import filters.get.GetUserInGoParamFilter;
 import filters.put.PutRequestBasicFilter;
+import filters.put.PutSetInfoFilter;
 import handlers.get.GetLevelInfo;
 import handlers.get.GetUserInGo;
 import handlers.put.PutSetInfo;
@@ -44,11 +45,11 @@ public class SunNetHttpServerImpl {
 
             HttpContext putSetInfo = server.createContext("/setinfo", new PutSetInfo(dataStorage));
             putSetInfo.getFilters().add(new PutRequestBasicFilter());
+            putSetInfo.getFilters().add(new PutSetInfoFilter());
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         server.start();
     }
 

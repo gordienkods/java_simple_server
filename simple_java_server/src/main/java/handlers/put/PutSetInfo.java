@@ -5,9 +5,8 @@ import com.sun.net.httpserver.HttpHandler;
 import core.Messages;
 import entity.UserEntity;
 import service.DataStorage;
-import static core.Parser.parseJsonFromPutBodyToUserEntity;
-import static core.Responser.isRequestMethod;
-import static core.Responser.sendRequest;
+import static core.Responser.getRequestBodyAsString;
+import static core.Responser.sendResponse;
 
 public class PutSetInfo implements HttpHandler   {
 
@@ -21,19 +20,14 @@ public class PutSetInfo implements HttpHandler   {
         try {
             requestHandler(exchange);
         }catch (Throwable t) {
-            sendRequest(Messages._500(), exchange);
+            sendResponse(Messages._500(), exchange);
             t.printStackTrace();
         }
     }
 
     private void requestHandler(HttpExchange exchange){
-        if(!isRequestMethod("PUT", exchange)) { return; }
-
-        UserEntity userEntity = parseJsonFromPutBodyToUserEntity(exchange);
-        if (userEntity != null) {
-            dataStorage.updateUserEntity(userEntity.getUserId(), userEntity);
-            sendRequest(Messages._201(), exchange);
-        }
+        UserEntity userEntity = new UserEntity(getRequestBodyAsString(exchange));
+        dataStorage.updateUserEntity(userEntity.getUserId(), userEntity);
     }
 
 }

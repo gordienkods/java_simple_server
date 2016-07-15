@@ -6,7 +6,7 @@ import core.Messages;
 import entity.UserEntity;
 import service.DataStorage;
 import static core.Responser.isRequestMethod;
-import static core.Responser.sendRequest;
+import static core.Responser.sendResponse;
 
 public class GetUserInGo implements HttpHandler {
 
@@ -20,7 +20,7 @@ public class GetUserInGo implements HttpHandler {
         try {
             requestHandler(exchange);
         } catch (Throwable t) {
-            sendRequest(Messages._500(), exchange);
+            sendResponse(Messages._500(), exchange);
             t.printStackTrace();
         }
     }
@@ -32,9 +32,9 @@ public class GetUserInGo implements HttpHandler {
         if (userEntity != null){
             userEntity.buildDescTop(20);
             String response = dataStorage.getUser(userId).toJson();
-            sendRequest(response, exchange);
+            sendResponse(response, exchange);
         } else {
-            sendRequest(Messages._404(), exchange);
+            sendResponse(Messages._404(), exchange);
         }
     }
 
