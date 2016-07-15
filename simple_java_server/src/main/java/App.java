@@ -2,6 +2,7 @@ import entity.UserEntity;
 
 import impl.HazelcastDaraStorageImp;
 import impl.SunNetHttpServerImpl;
+import impl.SunNetHttpServerImpl2;
 import service.DataStorage;
 import service.Server;
 
@@ -144,13 +145,21 @@ public class App {
 //
 //    }
 
+//    public static void main(String[] args) {
+//        DataStorage dataStorage = new HazelcastDaraStorageImp();
+//        dataStorage.startMasterStorage(89);
+//        Server server = new SunNetHttpServerImpl();
+//        server.setDataStorage(dataStorage);
+//        server.start();
+//    }
+
     public static void main(String[] args) {
         DataStorage dataStorage = new HazelcastDaraStorageImp();
         dataStorage.startMasterStorage(89);
-        Server server = new SunNetHttpServerImpl();
-        server.setDataStorage(dataStorage);
+        SunNetHttpServerImpl2 server= new SunNetHttpServerImpl2(dataStorage);
         server.start();
     }
+
 
 
 }

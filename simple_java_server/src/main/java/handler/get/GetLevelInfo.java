@@ -11,29 +11,34 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import service.DataStorage;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Map;
 
-public class GetLevelInfo extends BasicHttpHandler implements HttpHandler {
+public class GetLevelInfo implements HttpHandler {
+
+    private DataStorage dataStorage;
 
     public GetLevelInfo (DataStorage dataStorage){
-        super(dataStorage);
+        this.dataStorage = dataStorage;
     }
 
-    public void handle(HttpExchange httpExchange){
-        super.httpExchange = httpExchange;
+    public void handle(HttpExchange exchange){
         try {
-            requestHandler();
+            requestHandler(exchange);
         }catch (Throwable t) {
-            sendResponse(Messages._500());
+            try (OutputStream os = exchange.getResponseBody() ) {
+                exchange.sendResponseHeaders(200, Messages._500().getBytes().length);
+                os.write(Messages._500().getBytes());
+            } catch (IOException e2) {
+                e2.printStackTrace();
+            }
             t.printStackTrace();
         }
-
     }
 
-    protected void requestHandler(){
-        if(!isRequestMethod("GET")) { return; }
-        Integer levelId = Integer.parseInt(httpExchange.getRequestURI().toString().replace("/levelinfo/", ""));
-        System.err.println("LEVEL: " + levelId);
+    private void requestHandler(HttpExchange exchange){
+        Integer levelId = Integer.parseInt(exchange.getAttribute("levelId").toString());
         dataStorage.buildDescTopUsersByLevelResult(20, levelId);
         JSONObject jsonObject = new JSONObject();
         JSONArray jsonArray = new JSONArray();
@@ -47,6 +52,11 @@ public class GetLevelInfo extends BasicHttpHandler implements HttpHandler {
         jsonObject.put("sorted_level", levelId);
         jsonObject.put("top", jsonArray);
         System.err.println(jsonObject.toString());
-        sendResponse(jsonObject.toString());
+        try (OutputStream os = exchange.getResponseBody() ) {
+            exchange.sendResponseHeaders(200, jsonObject.toString().getBytes().length);
+            os.write(jsonObject.toString().getBytes());
+        } catch (IOException e2) {
+            e2.printStackTrace();
+        }
     }
 }
