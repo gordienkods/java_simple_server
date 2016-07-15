@@ -1,30 +1,22 @@
-package filters;
+package core;
 
-import com.sun.net.httpserver.Filter;
 import com.sun.net.httpserver.HttpExchange;
-import core.Messages;
+import static core.Responser.isRequestMethod;
 import java.io.IOException;
 import java.io.OutputStream;
 
-public class GetRequestBasicFilter extends Filter {
+public class Responser {
 
-    private static final String FILTER_DESC = "BASIC 'GET' REQUESTS FILTER";
-
-    public String description(){
-        return FILTER_DESC;
-    }
-
-    public void doFilter(HttpExchange exchange, Chain chain){
-        if(isRequestMethod("GET", exchange)){
-            try {
-                chain.doFilter(exchange);
-            } catch (IOException e){
-                e.printStackTrace();
-            }
+    public static void sendRequest(String msg, HttpExchange exchange){
+        try (OutputStream os = exchange.getResponseBody() ) {
+            exchange.sendResponseHeaders(200, msg.getBytes().length);
+            os.write(msg.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
-    private Boolean isRequestMethod(String expectedRequestMethod, HttpExchange httpExchange){
+    public static Boolean isRequestMethod(String expectedRequestMethod, HttpExchange httpExchange){
         String actualRequestMethod = httpExchange.getRequestMethod();
         if ( !expectedRequestMethod.equalsIgnoreCase(actualRequestMethod)) {
             try (OutputStream os = httpExchange.getResponseBody() ) {
@@ -37,5 +29,7 @@ public class GetRequestBasicFilter extends Filter {
         }
         return true;
     }
+
+
 
 }

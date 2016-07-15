@@ -1,12 +1,6 @@
-import entity.UserEntity;
-
 import impl.HazelcastDaraStorageImp;
 import impl.SunNetHttpServerImpl;
-import impl.SunNetHttpServerImpl2;
 import service.DataStorage;
-import service.Server;
-
-import java.util.Map;
 
 /**
  * Created by Димон on 04.07.2016.
@@ -156,7 +150,7 @@ public class App {
     public static void main(String[] args) {
         DataStorage dataStorage = new HazelcastDaraStorageImp();
         dataStorage.startMasterStorage(89);
-        SunNetHttpServerImpl2 server= new SunNetHttpServerImpl2(dataStorage);
+        SunNetHttpServerImpl server= new SunNetHttpServerImpl(dataStorage);
         server.start();
     }
 

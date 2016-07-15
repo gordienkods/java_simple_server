@@ -1,62 +1,55 @@
 package impl;
 
 import com.sun.net.httpserver.HttpContext;
-import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 import com.sun.net.httpserver.spi.HttpServerProvider;
-import handler.get.GetUserInGo;
-import handler.get.GetLevelInfo;
-import handler.put.PutSetInfo;
+import filters.get.GetLevelInfoParamFilter;
+import filters.get.GetRequestBasicFilter;
+import filters.get.GetUserInGoParamFilter;
+import filters.put.PutRequestBasicFilter;
+import handlers.get.GetLevelInfo;
+import handlers.get.GetUserInGo;
+import handlers.put.PutSetInfo;
 import service.DataStorage;
-import service.Server;
 import sun.net.httpserver.DefaultHttpServerProvider;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.concurrent.Executors;
 
-public class SunNetHttpServerImpl implements Server {
+public class SunNetHttpServerImpl {
 
     final int backlog = 64;
     final InetSocketAddress serverPort = new InetSocketAddress(85);
     private HttpServer server = null;
-    private HttpContext context = null;
     private DataStorage dataStorage;
 
-    public void setDataStorage(DataStorage dataStorage) {
+    public SunNetHttpServerImpl(DataStorage dataStorage) {
         this.dataStorage = dataStorage;
     }
 
     public void start() {
-        build();
-
-        createContext("/useringo");
-        setHandler(new GetUserInGo(dataStorage));
-
-        createContext("/levelinfo");
-        setHandler(new GetLevelInfo(dataStorage));
-
-        createContext("/setinfo");
-        setHandler(new PutSetInfo(dataStorage));
-
-        server.start();
-    }
-
-    public void build() {
         try {
             HttpServerProvider httpServerProvider = DefaultHttpServerProvider.provider();
             server = httpServerProvider.createHttpServer(serverPort, backlog);
             server.setExecutor(Executors.newCachedThreadPool());
+
+            HttpContext getUserInGoContext = server.createContext("/useringo", new GetUserInGo(dataStorage));
+            getUserInGoContext.getFilters().add(new GetRequestBasicFilter());
+            getUserInGoContext.getFilters().add(new GetUserInGoParamFilter());
+
+
+            HttpContext getLevelInfoContext = server.createContext("/levelinfo", new GetLevelInfo(dataStorage));
+            getLevelInfoContext.getFilters().add(new GetRequestBasicFilter());
+            getLevelInfoContext.getFilters().add(new GetLevelInfoParamFilter());
+
+            HttpContext putSetInfo = server.createContext("/setinfo", new PutSetInfo(dataStorage));
+            putSetInfo.getFilters().add(new PutRequestBasicFilter());
+
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
 
-    public void createContext (String contextName){
-        context = server.createContext(contextName);
-    }
-
-    public void setHandler(HttpHandler httpHandler){
-        context.setHandler(httpHandler);
+        server.start();
     }
 
 }

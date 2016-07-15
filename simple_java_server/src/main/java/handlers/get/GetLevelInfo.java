@@ -1,18 +1,13 @@
-package handler.get;
+package handlers.get;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import core.Messages;
-import core.Parser;
-import core.Sorter;
 import entity.UserEntity;
-import handler.BasicHttpHandler;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import service.DataStorage;
-
-import java.io.IOException;
-import java.io.OutputStream;
+import static core.Responser.sendRequest;
 import java.util.Map;
 
 public class GetLevelInfo implements HttpHandler {
@@ -27,12 +22,7 @@ public class GetLevelInfo implements HttpHandler {
         try {
             requestHandler(exchange);
         }catch (Throwable t) {
-            try (OutputStream os = exchange.getResponseBody() ) {
-                exchange.sendResponseHeaders(200, Messages._500().getBytes().length);
-                os.write(Messages._500().getBytes());
-            } catch (IOException e2) {
-                e2.printStackTrace();
-            }
+            sendRequest(Messages._500(), exchange);
             t.printStackTrace();
         }
     }
@@ -52,11 +42,6 @@ public class GetLevelInfo implements HttpHandler {
         jsonObject.put("sorted_level", levelId);
         jsonObject.put("top", jsonArray);
         System.err.println(jsonObject.toString());
-        try (OutputStream os = exchange.getResponseBody() ) {
-            exchange.sendResponseHeaders(200, jsonObject.toString().getBytes().length);
-            os.write(jsonObject.toString().getBytes());
-        } catch (IOException e2) {
-            e2.printStackTrace();
-        }
+        sendRequest(jsonObject.toString(), exchange);
     }
 }
