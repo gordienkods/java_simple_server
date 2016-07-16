@@ -2,7 +2,6 @@ package entity;
 import core.Parser;
 import core.Sorter;
 import org.json.JSONObject;
-
 import java.io.Serializable;
 import java.util.*;
 
@@ -12,7 +11,6 @@ public class UserEntity implements Serializable {
     private Integer specificLevelResult = 0;
     private Map<Integer, Integer> levelsAndResults = new HashMap<>();
     private Map<Integer, Integer> sortedTopLevelsAndResults = new LinkedHashMap<>();
-
 
     public UserEntity (Integer userId){
         this.userId = userId;

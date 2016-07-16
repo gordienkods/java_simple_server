@@ -49,8 +49,8 @@ public class SunNetHttpServerImpl {
             putSetInfo.getFilters().add(new PutRequestBasicFilter());
             putSetInfo.getFilters().add(new PutSetInfoFilter());
 
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Throwable t) {
+            t.printStackTrace();
         }
         server.start();
         LOG.info("Server has been started.");

@@ -9,7 +9,6 @@ import static core.Responser.isRequestMethod;
 
 public class PutRequestBasicFilter extends Filter {
 
-    private final Logger LOG = Logger.getLogger(PutRequestBasicFilter.class);
     private static final String FILTER_DESC = "BASIC 'GET' REQUESTS FILTER";
 
     public String description(){

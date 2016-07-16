@@ -11,6 +11,7 @@ import java.io.InputStream;
 import java.net.URI;
 import java.util.*;
 
+import static core.Responser.getRequestBodyAsString;
 import static core.Responser.sendResponse;
 
 
@@ -60,8 +61,8 @@ public class Parser {
         System.err.println("GET LEVEL INFO: " + exchange.getAttribute(constExpression).toString());
     }
 
-    public static Boolean parseJsonFromPutBodyToUserEntity(HttpExchange exchange){
-        String jsonString = "undefined";
+    public static Boolean parseJsonFromPutBodyRequestToUserEntity(HttpExchange exchange){
+        String jsonString = getRequestBodyAsString(exchange);
         try {
             new UserEntity(jsonString);
             return true;
@@ -70,14 +71,14 @@ public class Parser {
             t.printStackTrace();
         }
 
-        try (InputStream is = exchange.getRequestBody()){
-            Scanner scanner = new Scanner(is);
-            jsonString = scanner.next();
-
-        } catch (IOException e) {
-            sendResponse(Messages._500(), exchange);
-            e.printStackTrace();
-        }
+//        try (InputStream is = exchange.getRequestBody()){
+//            Scanner scanner = new Scanner(is);
+//            jsonString = scanner.next();
+//
+//        } catch (IOException e) {
+//            sendResponse(Messages._500(), exchange);
+//            e.printStackTrace();
+//        }
         return false;
     }
 
