@@ -2,10 +2,12 @@ package filters.get;
 
 import com.sun.net.httpserver.Filter;
 import com.sun.net.httpserver.HttpExchange;
+import exceptions.DataParsingError;
+import exceptions.InternalServerError;
 import org.apache.log4j.Logger;
-
 import static core.Parser.parseIntParamFromUriPath;
 import java.io.IOException;
+import java.net.URI;
 
 public class GetUserInGoParamFilter extends Filter {
 
@@ -18,10 +20,13 @@ public class GetUserInGoParamFilter extends Filter {
 
     public void doFilter(HttpExchange exchange, Chain chain){
         try {
-//            parseIntParamFromUriPath("/useringo/", "userId", exchange);
+            URI uri = exchange.getRequestURI();
+            exchange.setAttribute("userId", parseIntParamFromUriPath(uri, "/useringo/") );
             chain.doFilter(exchange);
-        } catch (IOException e){
-            e.printStackTrace();
+        }catch (IOException ex){
+            throw new InternalServerError(ex.getMessage());
+        } catch (DataParsingError er) {
+            throw er;
         }
     }
 }

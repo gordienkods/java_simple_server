@@ -31,11 +31,9 @@ public class GetLevelInfo implements HttpHandler {
         dataStorage.buildDescTopUsersByLevelResult(20, levelId);
         JSONObject jsonObject = new JSONObject();
         JSONArray jsonArray = new JSONArray();
-        System.err.println("SIZE DATA" + dataStorage.getSortedTopUsersByLevelResult().size());
         for (Map.Entry<Integer, UserEntity> entry : dataStorage.getSortedTopUsersByLevelResult().entrySet() ){
             String key = entry.getValue().getUserId().toString();
             String value = entry.getValue().getSpecificLevelResult().toString();
-            System.err.println("**KEY " + key + "  VALUE" + value);
             jsonArray.put(new JSONObject().put(key, value));
         }
         jsonObject.put("sorted_level", levelId);

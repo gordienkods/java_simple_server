@@ -20,14 +20,12 @@ public class GetUserInGo implements HttpHandler {
         try {
             requestHandler(exchange);
         } catch (Throwable t) {
-            sendResponse(Messages._500(), exchange);
-            t.printStackTrace();
+            throw t;
         }
     }
 
     private void requestHandler(HttpExchange exchange){
-        if(!isRequestMethod("GET", exchange)) { return; }
-        Integer userId = Integer.parseInt(exchange.getRequestURI().toString().replace("/useringo/", ""));
+        Integer userId =  Integer.parseInt(exchange.getAttribute("userId").toString());
         UserEntity userEntity = dataStorage.getUser(userId);
         if (userEntity != null){
             userEntity.buildDescTop(20);
