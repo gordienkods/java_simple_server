@@ -54,7 +54,6 @@ public class SunNetHttpServerImpl {
         }
         server.start();
         LOG.info("Server has been started.");
-
     }
 
 }

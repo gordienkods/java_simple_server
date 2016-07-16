@@ -21,13 +21,13 @@ public class HazelcastDaraStorageImp implements DataStorage {
     public void startMasterStorage(int port) {
         Config config = new Config();
         NetworkConfig network = config.getNetworkConfig();
+
         JoinConfig join = network.getJoin();
-        join.getMulticastConfig().setEnabled( true )
-                .addTrustedInterface( "127.0.0.1" )
+        join.getMulticastConfig()
+                .setEnabled( true )
+                .addTrustedInterface("127.0.0.1")
                 .addTrustedInterface("192.168.1.219")
                 .addTrustedInterface("192.168.1.11");
-//        join.getTcpIpConfig().addMember( "192.168.1.219" )
-//                .setRequiredMember( "192.168.10.100" ).setEnabled( true );
 
         HazelcastInstance hazelcastInstance = Hazelcast.newHazelcastInstance(config);
         users = hazelcastInstance.getMap("users");
