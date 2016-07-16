@@ -1,13 +1,5 @@
-/src/main/resources/FiltersResponseHar/Traffic sources
-/src/main/resources/FiltersResponseHar/Landing pages
-/src/main/resources/FiltersResponseHar/Campaigns
-/src/main/resources/FiltersResponseHar/Affiliate networks
-/src/main/resources/FiltersResponseHar/Total
-/src/main/resources/FiltersResponseHar/Offers
 #IDEA Files
 .idea
-src/main/resources/cookie
-src/main/resources/har
 target
 build
 *.iml
