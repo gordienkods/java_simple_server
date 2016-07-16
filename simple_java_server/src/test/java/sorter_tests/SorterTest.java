@@ -73,9 +73,9 @@ public class SorterTest {
         unsortedMap.put(user6.getUserId(), user6);
         unsortedMap.put(user7.getUserId(), user7);
 
-        Map<Integer, UserEntity> actualResult = sortUsersByResultsOnLevelByDescOrder(unsortedMap, 1);
+        Map<Integer, UserEntity> actualResult = sortUsersByResultsOnLevelByDescOrder(unsortedMap, 11);
 
-        for (Map.Entry<Integer,UserEntity> entityEntry : actualResult.entrySet()){
+        for (Map.Entry<Integer,UserEntity> entityEntry : unsortedMap.entrySet()){
             System.err.println("KEY: " + entityEntry.getKey() + "  VALUE: " + entityEntry.getValue());
         }
 //        System.err.println(actualResult.toString());
