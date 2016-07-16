@@ -6,6 +6,7 @@ import core.Messages;
 import exceptions.DataParsingError;
 import exceptions.InternalServerError;
 
+import static core.Parser.getRequestBodyAsString;
 import static core.Parser.parseJsonFromPutBodyRequestToUserEntity;
 import static core.Responser.sendResponse;
 
@@ -19,9 +20,9 @@ public class PutSetInfoFilter extends Filter {
 
     public void doFilter(HttpExchange exchange, Chain chain){
         try {
-            if (!parseJsonFromPutBodyRequestToUserEntity(exchange)) {
-                sendResponse(Messages._404(), exchange);
-                return;
+            String userEntityJson = getRequestBodyAsString(exchange);
+            if (parseJsonFromPutBodyRequestToUserEntity(userEntityJson)){
+                exchange.setAttribute("userEntytJsonInRequestBody", userEntityJson);
             }
             chain.doFilter(exchange);
         } catch (DataParsingError e) {

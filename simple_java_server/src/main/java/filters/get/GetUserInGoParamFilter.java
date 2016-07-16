@@ -18,7 +18,7 @@ public class GetUserInGoParamFilter extends Filter {
 
     public void doFilter(HttpExchange exchange, Chain chain){
         try {
-            parseIntParamFromUriPath("/useringo/", "userId", exchange);
+//            parseIntParamFromUriPath("/useringo/", "userId", exchange);
             chain.doFilter(exchange);
         } catch (IOException e){
             e.printStackTrace();

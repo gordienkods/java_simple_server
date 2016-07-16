@@ -22,8 +22,7 @@ public class GetLevelInfo implements HttpHandler {
         try {
             requestHandler(exchange);
         }catch (Throwable t) {
-            sendResponse(Messages._500(), exchange);
-            t.printStackTrace();
+            throw t;
         }
     }
 
@@ -41,7 +40,6 @@ public class GetLevelInfo implements HttpHandler {
         }
         jsonObject.put("sorted_level", levelId);
         jsonObject.put("top", jsonArray);
-        System.err.println(jsonObject.toString());
         sendResponse(jsonObject.toString(), exchange);
     }
 }

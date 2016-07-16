@@ -13,6 +13,7 @@ public class PutSetInfo implements HttpHandler   {
     private static final Logger LOG = Logger.getLogger(PutSetInfo.class);
 
     private DataStorage dataStorage;
+
     public PutSetInfo(DataStorage dataStorage){
         this.dataStorage = dataStorage;
     }
@@ -27,7 +28,7 @@ public class PutSetInfo implements HttpHandler   {
     }
 
     private void requestHandler(HttpExchange exchange){
-        UserEntity userEntity = new UserEntity(exchange.getAttribute("requestBody").toString());
+        UserEntity userEntity = new UserEntity(exchange.getAttribute("userEntytJsonInRequestBody").toString());
         dataStorage.updateUserEntity(userEntity.getUserId(), userEntity);
     }
 

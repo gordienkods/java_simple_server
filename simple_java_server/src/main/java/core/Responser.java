@@ -30,19 +30,8 @@ public class Responser {
         if ( !expectedRequestMethod.equalsIgnoreCase(actualRequestMethod)) {
             return false;
         }
-        exchange.setAttribute("requestBody", getRequestBodyAsString(exchange));
         return true;
     }
 
-    private static String getRequestBodyAsString(HttpExchange exchange){
-        try (InputStream is = exchange.getRequestBody()){
-            Scanner scanner = new Scanner(is);
-            return scanner.next();
-        } catch (IOException e) {
-            LOG.error("ERROR OCCURRED DURING GETTING REQUEST BODY AS STRING: ", e);
-//            sendResponse(Messages._500(), exchange);
 
-        }
-        return null;
-    }
 }

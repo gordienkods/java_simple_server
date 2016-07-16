@@ -3,19 +3,16 @@ package core;
 import com.sun.net.httpserver.HttpExchange;
 import entity.UserEntity;
 import exceptions.DataParsingError;
-import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.util.*;
-import static core.Responser.sendResponse;
-
 
 public class Parser {
-
-    private static final Logger LOG = Logger.getLogger(Parser.class);
-
 
     public static JSONArray mapToJsonArray (Map<Integer, Integer> map){
         Set<Map.Entry<Integer,Integer>> entrySet = map.entrySet();
@@ -40,31 +37,37 @@ public class Parser {
         return result;
     }
 
-    public static void parseIntParamFromUriPath(String attributeName, String constExpression, HttpExchange exchange){
-        URI uri = exchange.getRequestURI();
+    public static String parseIntParamFromUriPath(URI uri, String constExpression){
         String fullPath = uri.getPath();
         String parsedParam = "undefined";
         try {
             parsedParam = fullPath.replace(constExpression, "");
         } catch (Exception e1) {
-            throw new DataParsingError();
+            throw new DataParsingError(e1.getMessage());
         }
         try {
             Integer intParam = Integer.parseInt(parsedParam);
-        } catch (NumberFormatException e) {
-            throw new DataParsingError();
+        } catch (NumberFormatException e2) {
+            throw new DataParsingError(e2.getMessage());
         }
-        exchange.setAttribute(attributeName, parsedParam);
-        System.err.println("GET LEVEL INFO: " + exchange.getAttribute(constExpression).toString());
+        return parsedParam;
     }
 
-    public static Boolean parseJsonFromPutBodyRequestToUserEntity(HttpExchange exchange){
-        String jsonString = exchange.getAttribute("requestBody").toString();
+    public static Boolean parseJsonFromPutBodyRequestToUserEntity(String json){
         try {
-            new UserEntity(jsonString);
+            new UserEntity(json);
             return true;
         }catch (JSONException e){
-            throw new DataParsingError("CAN'T PARSE JSON [ " + jsonString + " ]");
+            throw new DataParsingError("CAN'T PARSE JSON [ " + json + " ]");
+        }
+    }
+
+   public static String getRequestBodyAsString(HttpExchange exchange){
+        try (InputStream is = exchange.getRequestBody()){
+            Scanner scanner = new Scanner(is);
+            return scanner.next();
+        } catch (IOException e) {
+           throw new DataParsingError( e.getMessage());
         }
     }
 
