@@ -2,8 +2,8 @@ package filters.get;
 
 import com.sun.net.httpserver.Filter;
 import com.sun.net.httpserver.HttpExchange;
-import exceptions.DataParsingError;
-import exceptions.InternalServerError;
+import errors.DataParsingError;
+import errors.InternalServerError;
 import org.apache.log4j.Logger;
 import static core.Parser.parseIntParamFromUriPath;
 import java.io.IOException;

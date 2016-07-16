@@ -2,7 +2,7 @@ package core;
 
 import com.sun.net.httpserver.HttpExchange;
 import entity.UserEntity;
-import exceptions.DataParsingError;
+import errors.DataParsingError;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

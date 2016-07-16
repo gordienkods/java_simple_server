@@ -3,6 +3,8 @@ package impl;
 import com.hazelcast.client.HazelcastClient;
 import com.hazelcast.client.config.ClientConfig;
 import com.hazelcast.config.Config;
+import com.hazelcast.config.JoinConfig;
+import com.hazelcast.config.NetworkConfig;
 import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.IMap;
@@ -18,24 +20,17 @@ public class HazelcastDaraStorageImp implements DataStorage {
 
     public void startMasterStorage(int port) {
         Config config = new Config();
-        config.getNetworkConfig().setPort(port);
+        NetworkConfig network = config.getNetworkConfig();
+        JoinConfig join = network.getJoin();
+        join.getMulticastConfig().setEnabled( true )
+                .addTrustedInterface( "127.0.0.1" )
+                .addTrustedInterface("192.168.1.219")
+                .addTrustedInterface("192.168.1.11");
+//        join.getTcpIpConfig().addMember( "192.168.1.219" )
+//                .setRequiredMember( "192.168.10.100" ).setEnabled( true );
 
         HazelcastInstance hazelcastInstance = Hazelcast.newHazelcastInstance(config);
         users = hazelcastInstance.getMap("users");
-    }
-
-    public void connectToMasterStorage (String ip) {
-        ClientConfig clientConfig = new ClientConfig();
-        clientConfig.addAddress(ip);
-
-        HazelcastInstance client = HazelcastClient.newHazelcastClient( clientConfig );
-        users = client.getMap("users");
-//        System.err.println("-------------- client map --------------");
-//        for (Map.Entry<Integer, String> entry : hazelcastMap.entrySet()){
-//            System.err.println("  KEY : " + entry.getKey());
-//            System.err.println("VALUE : " + entry.getValue());
-//            System.err.println("");
-//        }
     }
 
     public Map<Integer, UserEntity> getUsers() {
@@ -52,7 +47,6 @@ public class HazelcastDaraStorageImp implements DataStorage {
 
     public void updateUserEntity(Integer key, UserEntity userEntity){
         users.set(key, userEntity);
-        System.err.println("USERS SIZE: "  + users.size());
     }
 
     public void buildDescTopUsersByLevelResult(int topSize, int level){

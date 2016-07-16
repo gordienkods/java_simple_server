@@ -29,8 +29,9 @@ public class UserEntity implements Serializable {
     }
 
     public void setSpecificLevelResult(int level){
-        specificLevelResult = levelsAndResults.get(level);
-        System.err.println("USER ID: " + userId + "  RESULT FOR LEVEL [" + level + "]: " + specificLevelResult);
+        if (levelsAndResults.get(level) != null) {
+            specificLevelResult = levelsAndResults.get(level);
+        }
     }
 
     public void buildDescTop(int levelDeep){

@@ -2,13 +2,11 @@ package filters.put;
 
 import com.sun.net.httpserver.Filter;
 import com.sun.net.httpserver.HttpExchange;
-import core.Messages;
-import exceptions.DataParsingError;
-import exceptions.InternalServerError;
+import errors.DataParsingError;
+import errors.InternalServerError;
 
 import static core.Parser.getRequestBodyAsString;
 import static core.Parser.parseJsonFromPutBodyRequestToUserEntity;
-import static core.Responser.sendResponse;
 
 public class PutSetInfoFilter extends Filter {
 
