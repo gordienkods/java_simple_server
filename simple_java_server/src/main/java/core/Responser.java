@@ -18,38 +18,31 @@ public class Responser {
             LOG.info(" REQUEST" + " [ " + exchange.getRequestMethod() +" ] " +
                     " FROM [ " + exchange.getRequestURI().getHost() + " ] to [ " +
                     exchange.getRequestURI() + " ] BODY [ " +
-           /*getRequestBodyAsString(exchange)*/  " ] ");
+           exchange.getAttribute("requestBody") + " ] ");
             LOG.info("RESPONSE" + " [ " + exchange.getResponseCode() +" ] " + " [ " + msg + " ]\n");
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static Boolean isRequestMethod(String expectedRequestMethod, HttpExchange httpExchange){
-        String actualRequestMethod = httpExchange.getRequestMethod();
+    public static Boolean isRequestMethod(String expectedRequestMethod, HttpExchange exchange){
+        String actualRequestMethod = exchange.getRequestMethod();
         if ( !expectedRequestMethod.equalsIgnoreCase(actualRequestMethod)) {
-            try (OutputStream os = httpExchange.getResponseBody() ) {
-                httpExchange.sendResponseHeaders(200, Messages._405().getBytes().length);
-                os.write(Messages._405().getBytes());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
             return false;
         }
+        exchange.setAttribute("requestBody", getRequestBodyAsString(exchange));
         return true;
     }
 
-    public static String getRequestBodyAsString(HttpExchange exchange){
+    private static String getRequestBodyAsString(HttpExchange exchange){
         try (InputStream is = exchange.getRequestBody()){
             Scanner scanner = new Scanner(is);
             return scanner.next();
         } catch (IOException e) {
+            LOG.error("ERROR OCCURRED DURING GETTING REQUEST BODY AS STRING: ", e);
 //            sendResponse(Messages._500(), exchange);
-            e.printStackTrace();
+
         }
         return null;
     }
-
-
-
 }

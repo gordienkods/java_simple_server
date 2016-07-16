@@ -10,8 +10,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.util.*;
-
-import static core.Responser.getRequestBodyAsString;
 import static core.Responser.sendResponse;
 
 
@@ -62,7 +60,7 @@ public class Parser {
     }
 
     public static Boolean parseJsonFromPutBodyRequestToUserEntity(HttpExchange exchange){
-        String jsonString = getRequestBodyAsString(exchange);
+        String jsonString = exchange.getAttribute("requestBody").toString();
         try {
             new UserEntity(jsonString);
             return true;
@@ -70,15 +68,6 @@ public class Parser {
             sendResponse(Messages._500(), exchange);
             t.printStackTrace();
         }
-
-//        try (InputStream is = exchange.getRequestBody()){
-//            Scanner scanner = new Scanner(is);
-//            jsonString = scanner.next();
-//
-//        } catch (IOException e) {
-//            sendResponse(Messages._500(), exchange);
-//            e.printStackTrace();
-//        }
         return false;
     }
 

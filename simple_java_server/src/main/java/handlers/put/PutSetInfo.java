@@ -5,7 +5,6 @@ import com.sun.net.httpserver.HttpHandler;
 import core.Messages;
 import entity.UserEntity;
 import service.DataStorage;
-import static core.Responser.getRequestBodyAsString;
 import static core.Responser.sendResponse;
 
 public class PutSetInfo implements HttpHandler   {
@@ -19,6 +18,7 @@ public class PutSetInfo implements HttpHandler   {
     public void handle (HttpExchange exchange){
         try {
             requestHandler(exchange);
+            sendResponse(Messages._201(), exchange);
         }catch (Throwable t) {
             sendResponse(Messages._500(), exchange);
             t.printStackTrace();
@@ -26,7 +26,7 @@ public class PutSetInfo implements HttpHandler   {
     }
 
     private void requestHandler(HttpExchange exchange){
-        UserEntity userEntity = new UserEntity(getRequestBodyAsString(exchange));
+        UserEntity userEntity = new UserEntity(exchange.getAttribute("requestBody").toString());
         dataStorage.updateUserEntity(userEntity.getUserId(), userEntity);
     }
 

@@ -2,10 +2,10 @@ package filters.put;
 
 import com.sun.net.httpserver.Filter;
 import com.sun.net.httpserver.HttpExchange;
-import org.apache.log4j.Logger;
-
+import core.Messages;
 import java.io.IOException;
 import static core.Responser.isRequestMethod;
+import static core.Responser.sendResponse;
 
 public class PutRequestBasicFilter extends Filter {
 
@@ -22,6 +22,8 @@ public class PutRequestBasicFilter extends Filter {
             } catch (IOException e){
                 e.printStackTrace();
             }
+        } else {
+            sendResponse(Messages._405(), exchange);
         }
     }
 
