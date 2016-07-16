@@ -26,7 +26,7 @@ public class Sorter {
         return result;
     }
 
-    public static Map<Integer, UserEntity> sortUsersByResultsOnLevel(Map<Integer, UserEntity> unsortedMap, Integer level){
+    public static Map<Integer, UserEntity> sortUsersByResultsOnLevelByDescOrder(Map<Integer, UserEntity> unsortedMap, Integer level){
         List<Map.Entry<Integer, UserEntity>> list = new LinkedList<>(unsortedMap.entrySet());
 
         Collections.sort(list, new Comparator<Map.Entry<Integer, UserEntity>>() {

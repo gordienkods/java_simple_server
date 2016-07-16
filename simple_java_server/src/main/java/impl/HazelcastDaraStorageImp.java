@@ -1,7 +1,5 @@
 package impl;
 
-import com.hazelcast.client.HazelcastClient;
-import com.hazelcast.client.config.ClientConfig;
 import com.hazelcast.config.Config;
 import com.hazelcast.config.JoinConfig;
 import com.hazelcast.config.NetworkConfig;
@@ -50,7 +48,7 @@ public class HazelcastDaraStorageImp implements DataStorage {
     }
 
     public void buildDescTopUsersByLevelResult(int topSize, int level){
-        Map<Integer, UserEntity> sortedUsersByLevelResult = Sorter.sortUsersByResultsOnLevel(users, level);
+        Map<Integer, UserEntity> sortedUsersByLevelResult = Sorter.sortUsersByResultsOnLevelByDescOrder(users, level);
         Set<Map.Entry<Integer, UserEntity>> entrySet = sortedUsersByLevelResult.entrySet();
         Iterator<Map.Entry<Integer,UserEntity>> iterator = entrySet.iterator();
 
