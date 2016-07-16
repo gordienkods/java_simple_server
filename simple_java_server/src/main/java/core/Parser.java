@@ -2,12 +2,11 @@ package core;
 
 import com.sun.net.httpserver.HttpExchange;
 import entity.UserEntity;
+import exceptions.DataParsingError;
 import org.apache.log4j.Logger;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.IOException;
-import java.io.InputStream;
 import java.net.URI;
 import java.util.*;
 import static core.Responser.sendResponse;
@@ -15,7 +14,7 @@ import static core.Responser.sendResponse;
 
 public class Parser {
 
-    private final Logger LOG = Logger.getLogger(Messages.class);
+    private static final Logger LOG = Logger.getLogger(Parser.class);
 
 
     public static JSONArray mapToJsonArray (Map<Integer, Integer> map){
@@ -48,12 +47,12 @@ public class Parser {
         try {
             parsedParam = fullPath.replace(constExpression, "");
         } catch (Exception e1) {
-            sendResponse(Messages._405(), exchange);
+            throw new DataParsingError();
         }
         try {
             Integer intParam = Integer.parseInt(parsedParam);
         } catch (NumberFormatException e) {
-            sendResponse(Messages._404("param '" + parsedParam + "' value '" + parsedParam), exchange);
+            throw new DataParsingError();
         }
         exchange.setAttribute(attributeName, parsedParam);
         System.err.println("GET LEVEL INFO: " + exchange.getAttribute(constExpression).toString());
@@ -64,11 +63,9 @@ public class Parser {
         try {
             new UserEntity(jsonString);
             return true;
-        }catch (Throwable t){
-            sendResponse(Messages._500(), exchange);
-            t.printStackTrace();
+        }catch (JSONException e){
+            throw new DataParsingError("CAN'T PARSE JSON [ " + jsonString + " ]");
         }
-        return false;
     }
 
 }
