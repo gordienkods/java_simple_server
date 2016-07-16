@@ -18,7 +18,7 @@ public class Responser {
             LOG.info(" REQUEST" + " [ " + exchange.getRequestMethod() +" ] " +
                     " FROM [ " + exchange.getRequestURI().getHost() + " ] to [ " +
                     exchange.getRequestURI() + " ] BODY [ " +
-           exchange.getAttribute("requestBody") + " ] ");
+           exchange.getAttribute("userEntytJsonInRequestBody") + " ] ");
             LOG.info("RESPONSE" + " [ " + exchange.getResponseCode() +" ] " + " [ " + msg + " ]\n");
         } catch (IOException e) {
             e.printStackTrace();

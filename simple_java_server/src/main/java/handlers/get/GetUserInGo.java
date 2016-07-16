@@ -29,7 +29,7 @@ public class GetUserInGo implements HttpHandler {
         UserEntity userEntity = dataStorage.getUser(userId);
         if (userEntity != null){
             userEntity.buildDescTop(20);
-            String response = dataStorage.getUser(userId).toJson();
+            String response = userEntity.toJson();
             sendResponse(response, exchange);
         } else {
             sendResponse(Messages._404(), exchange);
