@@ -6,8 +6,8 @@ import org.apache.log4j.xml.SAXErrorHandler;
 import org.json.JSONException;
 import org.junit.Assert;
 import org.junit.Test;
+import sun.nio.cs.ext.IBM037;
 import java.util.*;
-
 import static core.Sorter.sortUsersByResultsOnLevelByDescOrder;
 
 public class UserUntityTest {
@@ -62,4 +62,49 @@ public class UserUntityTest {
         Assert.assertTrue(report.toString(), testResult);
     }
 
+    @Test
+    public void sortUsersResultsOnAllLevelsByDecOrder(){
+        StringBuilder report = new StringBuilder();
+        Boolean testResult = true;
+        UserEntity userEntity = new UserEntity("{\"userId\":1,\"levels_and_results\":[{\"1\":60},{\"11\":60},{\"2\":659},{\"3\":599},{\"4\":6781},{\"5\":552},{\"10\":0}]}");
+        Map<Integer, Integer> expRes = new LinkedHashMap<>();
+        expRes.put(4,6781);
+        expRes.put(2,659);
+        expRes.put(3,599);
+        expRes.put(5,552);
+        expRes.put(1,60);
+        expRes.put(11,60);
+        expRes.put(10,0);
+
+        userEntity.buildDescTop(20);
+        Map<Integer,Integer> actRes = userEntity.getSortedTopLevelsAndResults();
+
+        Set<Map.Entry<Integer,Integer>> actualEntry = actRes.entrySet();
+        Set<Map.Entry<Integer,Integer>> expectedEntry = expRes.entrySet();
+        Iterator<Map.Entry<Integer,Integer>> actualEntryIterator = actualEntry.iterator();
+        Iterator<Map.Entry<Integer,Integer>> expectedEntryIterator = expectedEntry.iterator();
+
+        report.append("\n");
+        while(expectedEntryIterator.hasNext()){
+            String actual = actualEntryIterator.next().toString();
+            String expected =  expectedEntryIterator.next().toString();
+            if (expected.equals(actual)) {
+                report.append("EXPECTED KEY/VALYE: " + expected + "  ACTUAL KEY/VALUE: " + actual + "\n");
+            } else {
+                report.append("---> EXPECTED KEY/VALYE: " + expected + "  ACTUAL KEY/VALUE: " + actual + "\n");
+                testResult = false;
+            }
+        }
+
+        Assert.assertTrue(report.toString(), testResult);
+    }
+
+    @Test
+    public void serializeUserEntityToJson(){
+        UserEntity userEntity = new UserEntity("{\"userId\":1,\"levels_and_results\":[{\"1\":60},{\"11\":60},{\"2\":659},{\"3\":599},{\"4\":6781},{\"5\":552},{\"10\":0}]}");
+        String expRes = "{\"top\":[],\"userId\":1,\"levels_and_results\":[{\"1\":60},{\"2\":659},{\"3\":599},{\"4\":6781},{\"5\":552},{\"10\":0},{\"11\":60}]}";
+        String actRes = userEntity.toString();
+
+        Assert.assertEquals(expRes,actRes);
+    }
 }

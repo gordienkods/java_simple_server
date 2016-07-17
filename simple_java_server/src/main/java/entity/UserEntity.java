@@ -39,6 +39,7 @@ public class UserEntity implements Serializable {
         Set<Map.Entry<Integer, Integer>> entrySet = sortedResultsOnAllLevels.entrySet();
         Iterator<Map.Entry<Integer,Integer>> iterator = entrySet.iterator();
 
+        sortedTopLevelsAndResults = new LinkedHashMap<>();
         if (levelDeep < sortedResultsOnAllLevels.size()){
             for (int i = 0; i < levelDeep; i++){
                 Map.Entry<Integer, Integer> entry = iterator.next();
