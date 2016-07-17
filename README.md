@@ -1,6 +1,6 @@
 # java_simple_server
 
-Require program rguments:
+Require program arguments:
 "85" "100" "192.168.1.219", where:
 "85" - port for http server;
 "100" - back log size;
