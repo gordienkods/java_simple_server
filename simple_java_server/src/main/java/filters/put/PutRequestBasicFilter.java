@@ -2,10 +2,10 @@ package filters.put;
 
 import com.sun.net.httpserver.Filter;
 import com.sun.net.httpserver.HttpExchange;
-import core.Messages;
+import tools.JsonMSG;
 import org.apache.log4j.Logger;
-import static core.Responser.isRequestMethod;
-import static core.Responser.sendResponse;
+import static tools.Responser.isRequestMethod;
+import static tools.Responser.sendResponse;
 
 public class PutRequestBasicFilter extends Filter {
 
@@ -23,13 +23,13 @@ public class PutRequestBasicFilter extends Filter {
                 chain.doFilter(exchange);
             } catch (Throwable t){
                  /*NOP*/
-                sendResponse(Messages._500(), exchange);
-                LOG.error(Messages.LOG_ERROR_DECORATION);
+                sendResponse(JsonMSG.errorMsgAsJson(JsonMSG.ITERNAL_SERVER_ERROR), exchange);
+                LOG.error(JsonMSG.LOG_ERROR_DECORATION);
                 LOG.error("METHOD [PUT] ERROR HANDLING: ", t);
-                LOG.error(Messages.LOG_ERROR_DECORATION + "\n");
+                LOG.error(JsonMSG.LOG_ERROR_DECORATION + "\n");
             }
         } else {
-            sendResponse(Messages._405(), exchange);
+            sendResponse(JsonMSG.errorMsgAsJson(JsonMSG.METHOD_NOT_ALLOWED), exchange);
         }
     }
 

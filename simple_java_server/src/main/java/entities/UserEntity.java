@@ -1,7 +1,7 @@
-package entity;
+package entities;
 
-import core.Parser;
-import core.Sorter;
+import tools.Parser;
+import tools.Sorter;
 import org.json.JSONObject;
 import java.io.Serializable;
 import java.util.*;

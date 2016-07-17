@@ -1,7 +1,7 @@
-package core;
+package tools;
 
-import entity.UserEntity;
-import org.apache.log4j.Logger;
+import entities.UserEntity;
+
 import java.util.*;
 
 public class Sorter {

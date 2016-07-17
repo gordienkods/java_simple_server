@@ -1,6 +1,6 @@
 package modules;
 
-import entity.UserEntity;
+import entities.UserEntity;
 import impl.HazelcastDataStorageImp;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -31,7 +31,7 @@ public class HazelcastDataStorageImpTest {
         user7 = new UserEntity("{\"userId\":7,\"levels_and_results\":[{\"1\":711},{\"2\":622},{\"3\":733},{\"4\":744},{\"5\":755}]}");
 
         dataStorage = new HazelcastDataStorageImp();
-        dataStorage.startStorage(1542);
+        dataStorage.startStorage();
         dataStorage.addUser(user1);
         dataStorage.addUser(user2);
         dataStorage.addUser(user3);

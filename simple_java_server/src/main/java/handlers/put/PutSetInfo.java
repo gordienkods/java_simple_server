@@ -2,11 +2,11 @@ package handlers.put;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import core.Messages;
-import entity.UserEntity;
+import tools.JsonMSG;
+import entities.UserEntity;
 import org.apache.log4j.Logger;
 import service.DataStorage;
-import static core.Responser.sendResponse;
+import static tools.Responser.sendResponse;
 
 public class PutSetInfo implements HttpHandler   {
 
@@ -21,7 +21,7 @@ public class PutSetInfo implements HttpHandler   {
     public void handle (HttpExchange exchange){
         try {
             requestHandler(exchange);
-            sendResponse(Messages._201(), exchange);
+            sendResponse(JsonMSG.successMsgAsJson(exchange.getAttribute("userEntytJsonInRequestBody").toString()), exchange);
         }catch (Throwable t) {
            throw t;
         }

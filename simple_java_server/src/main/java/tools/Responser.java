@@ -1,15 +1,13 @@
-package core;
+package tools;
 
 import com.sun.net.httpserver.HttpExchange;
 import org.apache.log4j.Logger;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Scanner;
 
 public class Responser {
 
-    private static final Logger LOG = Logger.getLogger(Messages.class);
+    private static final Logger LOG = Logger.getLogger(JsonMSG.class);
 
     public static void sendResponse(String msg, HttpExchange exchange){
         try (OutputStream os = exchange.getResponseBody() ) {

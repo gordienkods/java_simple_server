@@ -1,7 +1,7 @@
-package core;
+package tools;
 
 import com.sun.net.httpserver.HttpExchange;
-import entity.UserEntity;
+import entities.UserEntity;
 import errors.DataParsingError;
 import org.json.JSONArray;
 import org.json.JSONException;

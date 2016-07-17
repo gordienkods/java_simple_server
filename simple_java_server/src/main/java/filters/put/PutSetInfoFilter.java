@@ -4,8 +4,8 @@ import com.sun.net.httpserver.Filter;
 import com.sun.net.httpserver.HttpExchange;
 import errors.DataParsingError;
 import errors.InternalServerError;
-import static core.Parser.getRequestBodyAsString;
-import static core.Parser.parseJsonFromPutBodyRequestToUserEntity;
+import static tools.Parser.getRequestBodyAsString;
+import static tools.Parser.parseJsonFromPutBodyRequestToUserEntity;
 
 public class PutSetInfoFilter extends Filter {
 

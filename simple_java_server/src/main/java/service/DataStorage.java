@@ -1,6 +1,6 @@
 package service;
 
-import entity.UserEntity;
+import entities.UserEntity;
 import java.util.Map;
 
 public interface DataStorage {

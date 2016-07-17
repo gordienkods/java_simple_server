@@ -1,6 +1,6 @@
 package modules;
 
-import entity.UserEntity;
+import entities.UserEntity;
 import org.json.JSONException;
 import org.junit.Assert;
 import org.junit.Test;

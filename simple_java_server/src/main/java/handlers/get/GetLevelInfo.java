@@ -2,13 +2,8 @@ package handlers.get;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import core.Messages;
-import entity.UserEntity;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import service.DataStorage;
-import static core.Responser.sendResponse;
-import java.util.Map;
+import static tools.Responser.sendResponse;
 
 public class GetLevelInfo implements HttpHandler {
 

@@ -5,7 +5,7 @@ import com.sun.net.httpserver.HttpExchange;
 import errors.DataParsingError;
 import errors.InternalServerError;
 import org.apache.log4j.Logger;
-import static core.Parser.parseIntParamFromUriPath;
+import static tools.Parser.parseIntParamFromUriPath;
 import java.io.IOException;
 import java.net.URI;
 

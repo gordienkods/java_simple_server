@@ -2,11 +2,10 @@ package handlers.get;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import core.Messages;
-import entity.UserEntity;
+import tools.JsonMSG;
+import entities.UserEntity;
 import service.DataStorage;
-import static core.Responser.isRequestMethod;
-import static core.Responser.sendResponse;
+import static tools.Responser.sendResponse;
 
 public class GetUserInGo implements HttpHandler {
 
@@ -32,7 +31,7 @@ public class GetUserInGo implements HttpHandler {
             String response = userEntity.toJson();
             sendResponse(response, exchange);
         } else {
-            sendResponse(Messages._404(), exchange);
+            sendResponse(JsonMSG.errorMsgAsJson("no user with id " + exchange.getAttribute("userId")), exchange);
         }
     }
 
