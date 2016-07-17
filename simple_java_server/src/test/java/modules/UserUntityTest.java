@@ -1,14 +1,10 @@
-package sorter_tests;
+package modules;
 
-import core.Sorter;
 import entity.UserEntity;
-import org.apache.log4j.xml.SAXErrorHandler;
 import org.json.JSONException;
 import org.junit.Assert;
 import org.junit.Test;
-import sun.nio.cs.ext.IBM037;
 import java.util.*;
-import static core.Sorter.sortUsersByResultsOnLevelByDescOrder;
 
 public class UserUntityTest {
 
@@ -53,7 +49,6 @@ public class UserUntityTest {
 
             if ( (Integer.compare(actVal, expVal) == 0) && (actVal != null) ){
                 report.append("KEY: " + i + " EXP VAL: [" + expVal + "] ACT VAL: [" + actVal + "]\n");
-
             } else {
                 report.append("---> KEY: " + i + " EXP VAL: [" + expVal + "] ACT VAL: [" + actVal + "]\n");
                 testResult = false;
