@@ -1,4 +1,5 @@
 package entity;
+
 import core.Parser;
 import core.Sorter;
 import org.json.JSONObject;

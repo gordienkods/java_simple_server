@@ -4,7 +4,6 @@ import com.sun.net.httpserver.Filter;
 import com.sun.net.httpserver.HttpExchange;
 import core.Messages;
 import org.apache.log4j.Logger;
-
 import javax.sql.rowset.serial.SerialRef;
 import java.io.IOException;
 import static core.Responser.isRequestMethod;
@@ -27,7 +26,7 @@ public class GetRequestBasicFilter extends Filter {
                 /*NOP*/
                 sendResponse(Messages._500(), exchange);
                 LOG.error(Messages.LOG_ERROR_DECORATION);
-                LOG.error("METHOD [PUT] ERROR HANDLING: ", t);
+                LOG.error("METHOD [GET] ERROR HANDLING: ", t);
                 LOG.error(Messages.LOG_ERROR_DECORATION + "\n");
             }
         } else {

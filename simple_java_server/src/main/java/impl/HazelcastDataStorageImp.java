@@ -19,7 +19,7 @@ public class HazelcastDataStorageImp implements DataStorage {
     private Map<Integer, UserEntity> sortedTopUsersByLevelResult = new LinkedHashMap<>();
     private Integer levelId = 0;
 
-    public void startMasterStorage(int port) {
+    public void startStorage() {
         Config config = new Config();
         NetworkConfig network = config.getNetworkConfig();
 
@@ -86,16 +86,6 @@ public class HazelcastDataStorageImp implements DataStorage {
         jsonObject.put("top", jsonArray);
 
         return jsonObject.toString();
-    }
-
-    public void print(){
-        for(Map.Entry<Integer, UserEntity> entry : sortedTopUsersByLevelResult.entrySet()){
-            System.err.println("");
-            System.err.println("KEY: " + entry.getKey() + "\n" +
-                    "USER ID: " + entry.getValue().getUserId() + "\n" +
-            "VALUE ON LEVEL 2: " +  entry.getValue().getSpecificLevelResult());
-            System.err.println("");
-        }
     }
 
 }

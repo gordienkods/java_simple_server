@@ -13,12 +13,13 @@ import handlers.get.GetUserInGo;
 import handlers.put.PutSetInfo;
 import org.apache.log4j.Logger;
 import service.DataStorage;
+import service.Server;
 import sun.net.httpserver.DefaultHttpServerProvider;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.concurrent.Executors;
 
-public class SunNetHttpServerImpl {
+public class SunNetHttpServerImpl implements Server {
 
     private final Logger LOG = Logger.getLogger(SunNetHttpServerImpl.class);
     final int backlog = 64;

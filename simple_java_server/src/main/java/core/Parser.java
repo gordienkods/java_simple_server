@@ -66,7 +66,7 @@ public class Parser {
             Scanner scanner = new Scanner(is);
             return scanner.next();
         } catch (IOException e) {
-           throw new DataParsingError( e.getMessage());
+           throw new DataParsingError(e.getMessage());
         }
     }
 

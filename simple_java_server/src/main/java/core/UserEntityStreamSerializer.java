@@ -14,14 +14,12 @@ public class UserEntityStreamSerializer implements StreamSerializer<UserEntity> 
     }
 
     @Override
-    public void write(ObjectDataOutput out, UserEntity userEntity )
-            throws IOException {
+    public void write(ObjectDataOutput out, UserEntity userEntity ) throws IOException {
         out.writeUTF(userEntity.toJson());
     }
 
     @Override
-    public UserEntity read( ObjectDataInput in )
-            throws IOException {
+    public UserEntity read( ObjectDataInput in ) throws IOException {
         String json = in.readUTF();
         return new UserEntity(json);
     }

@@ -1,16 +1,17 @@
 package service;
 
 import entity.UserEntity;
-
 import java.util.Map;
 
 public interface DataStorage {
 
-    public void startMasterStorage(int port);
+    public void startStorage();
 
     public UserEntity getUser (int userId);
 
     public Map<Integer, UserEntity> getUsers ();
+
+    public void addUser(UserEntity userEntity);
 
     public void updateUserEntity(Integer key, UserEntity userEntity);
 
