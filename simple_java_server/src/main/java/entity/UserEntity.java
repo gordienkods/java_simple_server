@@ -64,6 +64,14 @@ public class UserEntity implements Serializable {
         return json.toString();
     }
 
+    public Map<Integer, Integer> getLevelsAndResults() {
+        return levelsAndResults;
+    }
+
+    public Map<Integer, Integer> getSortedTopLevelsAndResults() {
+        return sortedTopLevelsAndResults;
+    }
+
     private String fromJson(String jsonString){
         JSONObject json = new JSONObject(jsonString);
         this.userId = Integer.parseInt(json.get("userId").toString());
