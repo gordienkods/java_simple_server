@@ -1,5 +1,5 @@
-import impl.HazelcastDataStorageImp;
-import impl.SunNetHttpServerImpl;
+import data.storage.HazelcastDataStorageImp;
+import http.server.impl.SunNetHttpServerImpl;
 import service.DataStorage;
 import service.Server;
 
@@ -24,7 +24,5 @@ public class App {
         String lineWithIp = args[2];
         return lineWithIp.split(",");
     }
-
-
 
 }

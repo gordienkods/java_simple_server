@@ -1,4 +1,4 @@
-package filters.put;
+package http.server.filters.put;
 
 import com.sun.net.httpserver.Filter;
 import com.sun.net.httpserver.HttpExchange;

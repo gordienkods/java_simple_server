@@ -1,4 +1,4 @@
-package impl;
+package data.storage;
 
 import com.hazelcast.config.Config;
 import com.hazelcast.config.JoinConfig;

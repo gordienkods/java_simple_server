@@ -1,4 +1,4 @@
-package handlers.get;
+package http.server.handlers.get;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;

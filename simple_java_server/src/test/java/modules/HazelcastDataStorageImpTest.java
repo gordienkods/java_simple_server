@@ -1,7 +1,7 @@
 package modules;
 
 import entities.UserEntity;
-import impl.HazelcastDataStorageImp;
+import data.storage.HazelcastDataStorageImp;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.Assert;

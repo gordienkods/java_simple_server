@@ -1,21 +1,20 @@
-package impl;
+package http.server.impl;
 
 import com.sun.net.httpserver.HttpContext;
 import com.sun.net.httpserver.HttpServer;
 import com.sun.net.httpserver.spi.HttpServerProvider;
-import filters.get.GetLevelInfoParamFilter;
-import filters.get.GetRequestBasicFilter;
-import filters.get.GetUserInGoParamFilter;
-import filters.put.PutRequestBasicFilter;
-import filters.put.PutSetInfoFilter;
-import handlers.get.GetLevelInfo;
-import handlers.get.GetUserInGo;
-import handlers.put.PutSetInfo;
+import http.server.filters.get.GetLevelInfoParamFilter;
+import http.server.filters.get.GetRequestBasicFilter;
+import http.server.filters.get.GetUserInGoParamFilter;
+import http.server.filters.put.PutRequestBasicFilter;
+import http.server.filters.put.PutSetInfoFilter;
+import http.server.handlers.get.GetLevelInfo;
+import http.server.handlers.get.GetUserInGo;
+import http.server.handlers.put.PutSetInfo;
 import org.apache.log4j.Logger;
 import service.DataStorage;
 import service.Server;
 import sun.net.httpserver.DefaultHttpServerProvider;
-import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.concurrent.Executors;
 
