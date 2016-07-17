@@ -6,6 +6,7 @@ import com.hazelcast.config.NetworkConfig;
 import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.IMap;
+import org.apache.log4j.Logger;
 import tools.Sorter;
 import entities.UserEntity;
 import org.json.JSONArray;
@@ -15,23 +16,32 @@ import java.util.*;
 
 public class HazelcastDataStorageImp implements DataStorage {
 
+    private final Logger LOG = Logger.getLogger(HazelcastDataStorageImp.class);
+
     private IMap<Integer, UserEntity> users;
     private Map<Integer, UserEntity> sortedTopUsersByLevelResult = new LinkedHashMap<>();
     private Integer levelId = 0;
+    private String [] trastedInterfaces;
+
+    public HazelcastDataStorageImp(String [] trustedInterfaces){
+        this.trastedInterfaces = trustedInterfaces;
+    }
 
     public void startStorage() {
         Config config = new Config();
         NetworkConfig network = config.getNetworkConfig();
+        StringBuilder stringTrastedInterfaces = new StringBuilder();
 
         JoinConfig join = network.getJoin();
-        join.getMulticastConfig()
-                .setEnabled( true )
-                .addTrustedInterface("127.0.0.1")
-                .addTrustedInterface("192.168.1.219")
-                .addTrustedInterface("192.168.1.11");
+        join.getMulticastConfig().setEnabled( true );
+        for (String trastedInterface : trastedInterfaces) {
+            join.getMulticastConfig().addTrustedInterface(trastedInterface);
+            stringTrastedInterfaces.append("[" + trastedInterface + "]  ");
+        }
 
         HazelcastInstance hazelcastInstance = Hazelcast.newHazelcastInstance(config);
         users = hazelcastInstance.getMap("users");
+        LOG.info("Data storage started with trusted interfaces: " + stringTrastedInterfaces.toString());
     }
 
     public Map<Integer, UserEntity> getUsers() {

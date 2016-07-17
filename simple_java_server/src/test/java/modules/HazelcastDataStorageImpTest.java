@@ -30,7 +30,7 @@ public class HazelcastDataStorageImpTest {
         user6 = new UserEntity("{\"userId\":6,\"levels_and_results\":[{\"1\":611},{\"2\":622},{\"3\":633},{\"4\":644},{\"5\":655}]}");
         user7 = new UserEntity("{\"userId\":7,\"levels_and_results\":[{\"1\":711},{\"2\":622},{\"3\":733},{\"4\":744},{\"5\":755}]}");
 
-        dataStorage = new HazelcastDataStorageImp();
+        dataStorage = new HazelcastDataStorageImp(new String [] {"127.0.0.1"});
         dataStorage.startStorage();
         dataStorage.addUser(user1);
         dataStorage.addUser(user2);

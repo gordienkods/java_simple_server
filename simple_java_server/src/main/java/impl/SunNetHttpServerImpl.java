@@ -22,13 +22,15 @@ import java.util.concurrent.Executors;
 public class SunNetHttpServerImpl implements Server {
 
     private final Logger LOG = Logger.getLogger(SunNetHttpServerImpl.class);
-    final int backlog = 64;
-    final InetSocketAddress serverPort = new InetSocketAddress(85);
+    final int backlog;
+    final InetSocketAddress serverPort;
     private HttpServer server = null;
     private DataStorage dataStorage;
 
-    public SunNetHttpServerImpl(DataStorage dataStorage) {
+    public SunNetHttpServerImpl(DataStorage dataStorage, Integer port, Integer backlog) {
         this.dataStorage = dataStorage;
+        serverPort =  new InetSocketAddress(port);
+        this.backlog = backlog;
     }
 
     public void start() {
@@ -54,7 +56,7 @@ public class SunNetHttpServerImpl implements Server {
             t.printStackTrace();
         }
         server.start();
-        LOG.info("Server has been started.");
+        LOG.info("Server has been started on port [" + serverPort.toString() + "] and back log size [" + backlog +"]");
     }
 
 }
