@@ -21,7 +21,7 @@ public class PutSetInfo implements HttpHandler   {
     public void handle (HttpExchange exchange){
         try {
             requestHandler(exchange);
-            sendResponse(JsonMSG.successMsgAsJson(exchange.getAttribute("userEntytJsonInRequestBody").toString()), exchange);
+            sendResponse(JsonMSG.successMsgAsJson("user and levels result added/updated"), exchange);
         }catch (Throwable t) {
            throw t;
         }
