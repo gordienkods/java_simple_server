@@ -8,13 +8,16 @@ import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.IMap;
 import core.Sorter;
 import entity.UserEntity;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import service.DataStorage;
 import java.util.*;
 
-public class HazelcastDaraStorageImp implements DataStorage {
+public class HazelcastDataStorageImp implements DataStorage {
 
     private IMap<Integer, UserEntity> users;
     private Map<Integer, UserEntity> sortedTopUsersByLevelResult = new LinkedHashMap<>();
+    private Integer levelId = 0;
 
     public void startMasterStorage(int port) {
         Config config = new Config();
@@ -48,6 +51,7 @@ public class HazelcastDaraStorageImp implements DataStorage {
     }
 
     public void buildDescTopUsersByLevelResult(int topSize, int level){
+        levelId = level;
         Map<Integer, UserEntity> sortedUsersByLevelResult = Sorter.sortUsersByResultsOnLevelByDescOrder(users, level);
         Set<Map.Entry<Integer, UserEntity>> entrySet = sortedUsersByLevelResult.entrySet();
         Iterator<Map.Entry<Integer,UserEntity>> iterator = entrySet.iterator();
@@ -67,6 +71,21 @@ public class HazelcastDaraStorageImp implements DataStorage {
 
     public Map<Integer, UserEntity> getSortedTopUsersByLevelResult() {
         return sortedTopUsersByLevelResult;
+    }
+
+    public String getSortedTopUsersByLevelResultAsJson(){
+        JSONObject jsonObject = new JSONObject();
+        JSONArray jsonArray = new JSONArray();
+
+        for (Map.Entry<Integer, UserEntity> entry : sortedTopUsersByLevelResult.entrySet() ){
+            String key = entry.getValue().getUserId().toString();
+            String value = entry.getValue().getSpecificLevelResult().toString();
+            jsonArray.put(new JSONObject().put(key, value));
+        }
+        jsonObject.put("sorted_level", levelId);
+        jsonObject.put("top", jsonArray);
+
+        return jsonObject.toString();
     }
 
     public void print(){

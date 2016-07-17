@@ -1,4 +1,4 @@
-import impl.HazelcastDaraStorageImp;
+import impl.HazelcastDataStorageImp;
 import impl.SunNetHttpServerImpl;
 import service.DataStorage;
 
@@ -148,7 +148,7 @@ public class App {
 //    }
 
     public static void main(String[] args) {
-        DataStorage dataStorage = new HazelcastDaraStorageImp();
+        DataStorage dataStorage = new HazelcastDataStorageImp();
         dataStorage.startMasterStorage(89);
         SunNetHttpServerImpl server= new SunNetHttpServerImpl(dataStorage);
         server.start();

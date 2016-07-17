@@ -18,4 +18,6 @@ public interface DataStorage {
 
     public Map<Integer, UserEntity> getSortedTopUsersByLevelResult();
 
+    public  String getSortedTopUsersByLevelResultAsJson();
+
 }

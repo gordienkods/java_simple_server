@@ -29,15 +29,15 @@ public class GetLevelInfo implements HttpHandler {
     private void requestHandler(HttpExchange exchange){
         Integer levelId = Integer.parseInt(exchange.getAttribute("levelId").toString());
         dataStorage.buildDescTopUsersByLevelResult(20, levelId);
-        JSONObject jsonObject = new JSONObject();
-        JSONArray jsonArray = new JSONArray();
-        for (Map.Entry<Integer, UserEntity> entry : dataStorage.getSortedTopUsersByLevelResult().entrySet() ){
-            String key = entry.getValue().getUserId().toString();
-            String value = entry.getValue().getSpecificLevelResult().toString();
-            jsonArray.put(new JSONObject().put(key, value));
-        }
-        jsonObject.put("sorted_level", levelId);
-        jsonObject.put("top", jsonArray);
-        sendResponse(jsonObject.toString(), exchange);
+//        JSONObject jsonObject = new JSONObject();
+//        JSONArray jsonArray = new JSONArray();
+//        for (Map.Entry<Integer, UserEntity> entry : dataStorage.getSortedTopUsersByLevelResult().entrySet() ){
+//            String key = entry.getValue().getUserId().toString();
+//            String value = entry.getValue().getSpecificLevelResult().toString();
+//            jsonArray.put(new JSONObject().put(key, value));
+//        }
+//        jsonObject.put("sorted_level", levelId);
+//        jsonObject.put("top", jsonArray);
+        sendResponse(dataStorage.getSortedTopUsersByLevelResultAsJson(), exchange);
     }
 }
